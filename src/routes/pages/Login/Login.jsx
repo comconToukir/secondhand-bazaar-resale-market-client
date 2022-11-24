@@ -6,6 +6,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useContext } from 'react';
 import { UserContext } from "../../../contexts/UserContext/UserContext";
 import toast from "react-hot-toast";
+import AuthButton from "../../../components/AuthButton/AuthButton";
 
 const Login = () => {
   const { logInUser } = useContext(UserContext);
@@ -35,7 +36,7 @@ const Login = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 my-36 max-w-screen-xl mx-auto">
+    <div className="grid grid-cols-1 lg:grid-cols-2 max-w-screen-xl mx-auto lg:h-screen">
       <div className="grid place-items-center">
         <img src={loginBanner} alt="login illustration" />
       </div>
@@ -56,7 +57,7 @@ const Login = () => {
                 })}
               />
               {errors?.email?.type === "required" && (
-                <p className="text-red-500">Email Address is required</p>
+                <p className="text-red-500 text-xs">Email Address is required</p>
               )}
               <label className="label">
                 <span className="label-text">Password</span>
@@ -70,15 +71,10 @@ const Login = () => {
                 })}
               />
               {errors?.password?.type === "required" && (
-                <p className="text-red-500">Password is required</p>
+                <p className="text-red-500 text-xs">Password is required</p>
               )}
               
-              <input
-                className="outline outline-1 outline-gray-600 font-semibold py-1 mt-7 w-36 mx-auto rounded-md cursor-pointer hover:bg-slate-500 hover:text-gray-800 focus:ring-2 focus:ring-offset-2 focus:ring-slate-500"
-                type="submit"
-                value="Login"
-                aria-label="submit"
-              />
+              <AuthButton>Login</AuthButton>
             </div>
           </form>
           <p className="mt-8 text-center text-sm">

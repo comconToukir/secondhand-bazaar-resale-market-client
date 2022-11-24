@@ -1,15 +1,39 @@
 import { useContext } from "react";
 import toast from "react-hot-toast";
 import { FaGoogle } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext/UserContext";
-import AuthButton from "../AuthButton/AuthButton";
 
-const SocialLogin = () => {
+const SocialLogin = ({ from }) => {
   const { googleSignIn } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const handleGoogleSignIn = () => {
     googleSignIn()
-      .then(() => {})
+      .then(({ user }) => {
+        console.log( user );
+
+        const userData = {
+          name: user.displayName,
+          email: user.email,
+          role: "buyer"
+        }
+
+        fetch("http://localhost:5000/user", {
+          method: "PUT",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            if (data.acknowledged) {
+              navigate(from);
+            }
+          });
+      })
       .catch((error) => {
         console.error(error);
         toast.error(error.code);

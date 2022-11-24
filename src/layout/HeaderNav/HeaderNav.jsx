@@ -1,44 +1,56 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 
-import logo from "../../assets/logo/secondhand-logo.png"
+import logo from "../../assets/logo/secondhand-logo.png";
+import { UserContext } from "../../contexts/UserContext/UserContext";
 
-const NavLinks = (
-  <>
-    <li>
-      <Link to="/">Home</Link>
-    </li>
-    <li tabIndex={0}>
-      <button className="justify-between">
-        Categories
-        <svg
-          className="fill-current"
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-        >
-          <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
-        </svg>
-      </button>
-      <ul className="p-2">
-        <li>
-          <a>Submenu 1</a>
-        </li>
-        <li>
-          <a>Submenu 2</a>
-        </li>
-      </ul>
-    </li>
-    <li>
-      <NavLink to="/blog">Blog</NavLink>
-    </li>
-  </>
-);
+const HeaderNav = ({ dashboard }) => {
+  const { user, logOutUser } = useContext(UserContext);
 
-const HeaderNav = () => {
+  const NavLinks = (
+    <>
+      <li>
+        <Link to="/">Home</Link>
+      </li>
+      <li tabIndex={0}>
+        <button className="justify-between">
+          Categories
+          <svg
+            className="fill-current"
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+          >
+            <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+          </svg>
+        </button>
+        <ul className="p-2">
+          <li>
+            <a>Submenu 1</a>
+          </li>
+          <li>
+            <a>Submenu 2</a>
+          </li>
+        </ul>
+      </li>
+      <li>
+        <NavLink to="/blog">Blog</NavLink>
+      </li>
+      {user && (
+        <li>
+          <NavLink to="/dashboard">Dashboard</NavLink>
+        </li>
+      )}
+    </>
+  );
+
   return (
-    <div className="navbar bg-base-100 max-w-screen-xl mx-auto">
+    <div
+      className={`navbar bg-base-100 mx-auto ${
+        !dashboard ? "max-w-screen-xl" : null
+      }`}
+    >
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -64,18 +76,54 @@ const HeaderNav = () => {
             {NavLinks}
           </ul>
         </div>
-        <Link to="/" className="text-2xl font-bold flex items-center gap-2">
-          <img src={logo} className="w-16" alt="secondhand-bazaar-logo" />
+        <Link
+          to="/"
+          className="lg:text-2xl text-lg font-bold flex gap-2 items-center"
+        >
+          <img
+            src={logo}
+            className="md:w-16 w-12"
+            alt="secondhand-bazaar-logo"
+          />
           SECONDHAND BAZAAR
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal p-0">
-          {NavLinks}
-        </ul>
+        <ul className="menu menu-horizontal p-0">{NavLinks}</ul>
       </div>
-      <div className="navbar-end">
-        <NavLink to='/login' className="">Login</NavLink>
+      <div className="navbar-end flex-grow-0">
+        {user ? (
+          <>
+            <button
+              onClick={logOutUser}
+              className="outline outline-1 outline-gray-600 font-semibold py-1 w-min px-4 rounded-md cursor-pointer hover:bg-slate-500 hover:text-gray-800"
+            >
+              Logout
+            </button>
+            <label
+              htmlFor="dashboard-toggle"
+              className="btn btn-square btn-ghost lg:hidden"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                className="inline-block w-6 h-6 stroke-current"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                ></path>
+              </svg>
+            </label>
+          </>
+        ) : (
+          <NavLink to="/login" className="">
+            Login
+          </NavLink>
+        )}
       </div>
     </div>
   );

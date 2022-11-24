@@ -89,7 +89,7 @@ const Register = () => {
                 <p className="text-red-500 text-xs">Password is required</p>
               )}
               
-              <AuthButton>Register</AuthButton>
+              <AuthButton className="mt-5 mx-auto">Register</AuthButton>
             </div>
           </form>
           <p className="mt-8 text-center text-sm">

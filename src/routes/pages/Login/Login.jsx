@@ -74,7 +74,7 @@ const Login = () => {
                 <p className="text-red-500 text-xs">Password is required</p>
               )}
               
-              <AuthButton>Login</AuthButton>
+              <AuthButton className="mt-5 mx-auto">Login</AuthButton>
             </div>
           </form>
           <p className="mt-8 text-center text-sm">

@@ -1,7 +1,8 @@
 import { useContext } from "react";
 import toast from "react-hot-toast";
-import { FaGoogle } from "react-icons/fa"
+import { FaGoogle } from "react-icons/fa";
 import { UserContext } from "../../contexts/UserContext/UserContext";
+import AuthButton from "../AuthButton/AuthButton";
 
 const SocialLogin = () => {
   const { googleSignIn } = useContext(UserContext);

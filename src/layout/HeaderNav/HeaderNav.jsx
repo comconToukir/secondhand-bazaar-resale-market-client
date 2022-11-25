@@ -37,7 +37,7 @@ const HeaderNav = ({ dashboard }) => {
             <button className="loading">Loading</button>
           ) : (
             categories.map((ct) => (
-              <li>
+              <li key={ct._id}>
                 <NavLink to={`/category/${ct._id}`}>{ct.categoryName}</NavLink>
               </li>
             ))

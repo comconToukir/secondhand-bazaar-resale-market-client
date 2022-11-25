@@ -15,7 +15,7 @@ const ProductCard = ({
   return (
     <div className="grid grid-cols-1 md:grid-cols-[300px,1fr]">
       <div>
-        <img src={image} className="md:h-48 w-full" alt="" />
+        <img src={image} className="md:h-48 max-h-64 w-full object-cover" alt="" />
       </div>
       <div className="px-3 flex flex-col">
         <h2 className="text-2xl font-medium">{productName}</h2>

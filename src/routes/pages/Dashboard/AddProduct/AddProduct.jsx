@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import AuthButton from "../../../../components/AuthButton/AuthButton";
-import { UserContext } from './../../../../contexts/UserContext/UserContext';
+import { UserContext } from "./../../../../contexts/UserContext/UserContext";
 
 const AddProduct = () => {
   const imgBBKey = process.env.REACT_APP_imgbb_key;
@@ -42,21 +42,21 @@ const AddProduct = () => {
           data.isSold = false;
           data.sellerEmail = user?.email;
 
-          fetch('http://localhost:5000/add-product', {
-            method: 'POST',
+          fetch("http://localhost:5000/add-product", {
+            method: "POST",
             headers: {
-              'content-type': 'application/json'
+              "content-type": "application/json",
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(data),
           })
-          .then(res => res.json())
-          .then(data => {
-            if (data.insertedId) {
-              toast.success("Your product was added successfully");
-              navigate('/dashboard/my-products');
-              setIsAdding(false);
-            }
-          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.insertedId) {
+                toast.success("Your product was added successfully");
+                navigate("/dashboard/my-products");
+                setIsAdding(false);
+              }
+            });
         }
       });
   };
@@ -101,7 +101,9 @@ const AddProduct = () => {
               <p className="text-red-500 text-xs">Product Name is required</p>
             )}
             {errors?.productName?.type === "maxLength" && (
-              <p className="text-red-500 text-xs">Product Name must be less than 48 characters</p>
+              <p className="text-red-500 text-xs">
+                Product Name must be less than 48 characters
+              </p>
             )}
 
             <label className="label">
@@ -157,6 +159,27 @@ const AddProduct = () => {
             )}
 
             <label className="label">
+              <span className="label-text">Product Category</span>
+            </label>
+            <select
+              className="select select-bordered"
+              aria-invalid={errors.category ? "true" : "false"}
+              {...register("category", {
+                required: true,
+              })}
+            >
+              <option value="graphicsCard">Graphics Card</option>
+              <option value="ram">RAM</option>
+              <option value="motherboard">Motherboard</option>
+              <option value="powerSupply">Power Supply</option>
+            </select>
+            {errors?.category?.type === "required" && (
+              <p className="text-red-500 text-xs">
+                Product category is required
+              </p>
+            )}
+
+            <label className="label">
               <span className="label-text">Purchase Year</span>
             </label>
             <input
@@ -186,7 +209,9 @@ const AddProduct = () => {
               })}
             />
             {errors?.description?.type === "maxLength" && (
-              <p className="text-red-500 text-xs">Description must be less than 300 characters</p>
+              <p className="text-red-500 text-xs">
+                Description must be less than 300 characters
+              </p>
             )}
 
             <label className="label">
@@ -221,7 +246,12 @@ const AddProduct = () => {
               <p className="text-red-500 text-xs">Location is required</p>
             )}
 
-            <button className={`btn btn-outline mt-5 transition-all mx-auto ${isAdding ? 'loading': null}`} disabled={isAdding}>
+            <button
+              className={`btn btn-outline mt-5 transition-all mx-auto ${
+                isAdding ? "loading" : null
+              }`}
+              disabled={isAdding}
+            >
               Add Product
             </button>
           </div>

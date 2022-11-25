@@ -1,12 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useContext } from "react";
+import toast from "react-hot-toast";
 import { UserContext } from "../../../../contexts/UserContext/UserContext";
 
 const MyProducts = () => {
   const { user } = useContext(UserContext);
 
-  const { data: products = [], isLoading } = useQuery({
+  const { data: products = [], isLoading, refetch } = useQuery({
     queryKey: ["my-products"],
     queryFn: async () => {
       const { data } = await axios.get(
@@ -18,7 +19,27 @@ const MyProducts = () => {
 
   if (isLoading) return "loading";
 
-  console.log(products);
+  // console.log(products);
+
+  const addAdvertise = (id) => {
+    fetch(`http://localhost:5000/advertise/${id}`, {
+      method: 'PUT',
+    })
+    .then(() => {
+      refetch();
+    })
+    .catch(error => {
+      toast.error('Sorry! An error occurred. Please try again.')
+    })
+  }
+
+  // const deleteProduct = (id) => {
+  //   fetch(`http://localhost:5000/delete-product/${id}`, {
+  //     method:
+  //   })
+  // }
+
+  //TODO: Remove advertisement
 
   return (
     <div className="px-5">
@@ -33,11 +54,12 @@ const MyProducts = () => {
               <th>Price</th>
               <th>Retail</th>
               <th>Condition</th>
+              <th>Category</th>
               <th>Description</th>
               <th>Contact</th>
               <th>Location</th>
               <th>Sold</th>
-              <th>Advertised</th>
+              <th>Advertisement</th>
             </tr>
           </thead>
           <tbody>
@@ -48,7 +70,7 @@ const MyProducts = () => {
                     <td>
                       <img
                         src={pd.image}
-                        className="h-full"
+                        className="h-10"
                         alt="product_image"
                       />
                     </td>
@@ -65,6 +87,7 @@ const MyProducts = () => {
                     <td>{pd.askingPrice}</td>
                     <td>{pd.retailPrice}</td>
                     <td>{pd.productCondition}</td>
+                    <td>{pd.category}</td>
                     <td>
                       <div
                         className="tooltip tooltip-right max-w-[150px]"
@@ -78,7 +101,7 @@ const MyProducts = () => {
                     <td>{pd.contact}</td>
                     <td>{pd.location}</td>
                     <td>{pd.isSold ? "true" : "false"}</td>
-                    <td>{pd.isAdvertised ? "true" : "false"}</td>
+                    <td>{pd.isAdvertised ? "running" : <button className="btn-primary py-1 px-3 rounded-sm" onClick={() => addAdvertise(pd._id)}>Advertise</button>}</td>
                   </tr>
                 ))
               : null}

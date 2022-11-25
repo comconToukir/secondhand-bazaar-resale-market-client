@@ -78,6 +78,7 @@ const Register = () => {
                 type="text"
                 placeholder="Your Full Name"
                 className="input input-bordered w-full h-9 rounded-sm placeholder:text-gray-500"
+                aria-invalid={errors.fullName ? "true" : "false"}
                 {...register("fullName", {
                   required: true,
                 })}
@@ -92,6 +93,7 @@ const Register = () => {
                 type="email"
                 placeholder="Your email address"
                 className="input input-bordered w-full h-9 rounded-sm placeholder:text-gray-500"
+                aria-invalid={errors.email ? "true" : "false"}
                 {...register("email", {
                   required: true,
                 })}
@@ -108,6 +110,7 @@ const Register = () => {
                 type="password"
                 placeholder="Your password"
                 className="input input-bordered w-full h-9 rounded-sm placeholder:text-gray-500"
+                aria-invalid={errors.password ? "true" : "false"}
                 {...register("password", {
                   required: true,
                 })}
@@ -120,6 +123,7 @@ const Register = () => {
               </label>
               <select
                 className="select select-bordered"
+                aria-invalid={errors.role ? "true" : "false"}
                 {...register("role", {
                   required: true,
                 })}
@@ -127,7 +131,7 @@ const Register = () => {
                 <option value="buyer">Buyer</option>
                 <option value="seller">Seller</option>
               </select>
-              {errors?.password?.type === "required" && (
+              {errors?.role?.type === "required" && (
                 <p className="text-red-500 text-xs">User Type is required</p>
               )}
               <AuthButton className="mt-5 mx-auto">Register</AuthButton>

@@ -52,6 +52,7 @@ const Login = () => {
                 type="email"
                 placeholder="Your email address"
                 className="input input-bordered w-full h-9 rounded-sm placeholder:text-gray-500"
+                aria-invalid={errors.email ? "true" : "false"}
                 {...register("email", {
                   required: true,
                 })}
@@ -66,6 +67,7 @@ const Login = () => {
                 type="password"
                 placeholder="Your password"
                 className="input input-bordered w-full h-9 rounded-sm placeholder:text-gray-500"
+                aria-invalid={errors.password ? "true" : "false"}
                 {...register("password", {
                   required: true,
                 })}

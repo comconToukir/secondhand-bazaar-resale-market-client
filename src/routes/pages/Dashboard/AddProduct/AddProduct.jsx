@@ -1,13 +1,17 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import AuthButton from "../../../../components/AuthButton/AuthButton";
+import { UserContext } from './../../../../contexts/UserContext/UserContext';
 
 const AddProduct = () => {
   const imgBBKey = process.env.REACT_APP_imgbb_key;
   const navigate = useNavigate();
+
+  const [isAdding, setIsAdding] = useState(false);
+  const { user } = useContext(UserContext);
 
   const {
     register,
@@ -17,7 +21,7 @@ const AddProduct = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
+    setIsAdding(true);
 
     const image = data.image[0];
     const formData = new FormData();
@@ -36,6 +40,7 @@ const AddProduct = () => {
 
           data.image = imgData.data.url;
           data.isSold = false;
+          data.sellerEmail = user?.email;
 
           fetch('http://localhost:5000/add-product', {
             method: 'POST',
@@ -46,10 +51,10 @@ const AddProduct = () => {
           })
           .then(res => res.json())
           .then(data => {
-            console.log(data)
             if (data.insertedId) {
               toast.success("Your product was added successfully");
               navigate('/dashboard/my-products');
+              setIsAdding(false);
             }
           })
         }
@@ -70,6 +75,7 @@ const AddProduct = () => {
             </label>
             <input
               type="file"
+              aria-invalid={errors.image ? "true" : "false"}
               {...register("image", {
                 required: true,
               })}
@@ -85,6 +91,7 @@ const AddProduct = () => {
               type="text"
               placeholder="Name"
               className="input input-bordered w-full h-9 rounded-sm placeholder:text-sm placeholder:text-gray-500"
+              aria-invalid={errors.productName ? "true" : "false"}
               {...register("productName", {
                 required: true,
                 maxLength: 48,
@@ -104,6 +111,7 @@ const AddProduct = () => {
               type="number"
               placeholder="Price"
               className="input input-bordered w-full h-9 rounded-sm placeholder:text-sm placeholder:text-gray-500"
+              aria-invalid={errors.askingPrice ? "true" : "false"}
               {...register("askingPrice", {
                 required: true,
               })}
@@ -119,6 +127,7 @@ const AddProduct = () => {
               type="number"
               placeholder="Retail Price"
               className="input input-bordered w-full h-9 rounded-sm placeholder:text-sm placeholder:text-gray-500"
+              aria-invalid={errors.retailPrice ? "true" : "false"}
               {...register("retailPrice", {
                 required: true,
               })}
@@ -132,6 +141,7 @@ const AddProduct = () => {
             </label>
             <select
               className="select select-bordered"
+              aria-invalid={errors.productCondition ? "true" : "false"}
               {...register("productCondition", {
                 required: true,
               })}
@@ -153,6 +163,7 @@ const AddProduct = () => {
               type="number"
               placeholder="YYYY"
               className="input input-bordered w-full h-9 rounded-sm placeholder:text-sm placeholder:text-gray-500"
+              aria-invalid={errors.retailPrice ? "true" : "false"}
               {...register("retailPrice", {
                 required: true,
               })}
@@ -168,6 +179,7 @@ const AddProduct = () => {
               type="text"
               placeholder="Write something about the product"
               className="input input-bordered w-full h-24 py-2 rounded-sm placeholder:text-sm placeholder:text-gray-500"
+              aria-invalid={errors.description ? "true" : "false"}
               {...register("description", {
                 maxLength: 300,
                 // required: true,
@@ -184,6 +196,7 @@ const AddProduct = () => {
               type="tel"
               placeholder="contact number"
               className="input input-bordered w-full h-9 rounded-sm placeholder:text-sm placeholder:text-gray-500"
+              aria-invalid={errors.contact ? "true" : "false"}
               {...register("contact", {
                 required: true,
               })}
@@ -199,6 +212,7 @@ const AddProduct = () => {
               type="text"
               placeholder="location"
               className="input input-bordered w-full h-9 rounded-sm placeholder:text-sm placeholder:text-gray-500"
+              aria-invalid={errors.location ? "true" : "false"}
               {...register("location", {
                 required: true,
               })}
@@ -207,7 +221,7 @@ const AddProduct = () => {
               <p className="text-red-500 text-xs">Location is required</p>
             )}
 
-            <button className="btn btn-outline mt-5 mx-auto">
+            <button className={`btn btn-outline mt-5 transition-all mx-auto ${isAdding ? 'loading': null}`} disabled={isAdding}>
               Add Product
             </button>
           </div>

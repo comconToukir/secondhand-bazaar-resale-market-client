@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 import AuthButton from "../../../components/AuthButton/AuthButton";
 
 const Register = () => {
-  const { createUser, loading } = useContext(UserContext);
+  const { createUser, updateUser, loading } = useContext(UserContext);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -37,6 +37,7 @@ const Register = () => {
     };
 
     createUser(email, password)
+      .then(() => updateUser({ displayName: name }))
       .then((result) => {
         fetch("http://localhost:5000/user", {
           method: "PUT",

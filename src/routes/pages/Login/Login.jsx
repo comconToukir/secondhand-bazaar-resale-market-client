@@ -38,7 +38,7 @@ const Login = () => {
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 max-w-screen-xl mx-auto lg:h-screen">
+    <div className="grid grid-cols-1 lg:grid-cols-2 max-w-screen-xl mx-auto my-12 lg:h-screen">
       <div className="grid place-items-center">
         <img src={loginBanner} alt="login illustration" />
       </div>

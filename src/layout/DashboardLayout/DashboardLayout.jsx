@@ -16,14 +16,16 @@ const DashboardLayout = () => {
 
   const dashboardRoutes = (
     <>
-      <>
-        <li>
-          <NavLink to="/">My Orders</NavLink>
-        </li>
-        <li>
-          <NavLink to="/wishlist">My Wishlist</NavLink>
-        </li>
-      </>
+      {role === "buyer" ? (
+        <>
+          <li>
+            <NavLink to="/my-orders">My Orders</NavLink>
+          </li>
+          <li>
+            <NavLink to="/wishlist">My Wishlist</NavLink>
+          </li>
+        </>
+      ) : null}
       {role === "seller" ? (
         <>
           <li>

@@ -1,7 +1,24 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../contexts/UserContext/UserContext";
 
-const BookingModal = ({ buyingProduct, closeModal }) => {
+const BookingModal = ({
+  buyingProduct: {
+    _id,
+    productName,
+    askingPrice,
+    sellerEmail,
+    location,
+    contact,
+  },
+  closeModal,
+}) => {
+  const [ isPending, setIsPending ] = useState(false);
+  const { user } = useContext(UserContext);
+  const navigate = useNavigate()
+
   const {
     register,
     handleSubmit,
@@ -9,76 +26,118 @@ const BookingModal = ({ buyingProduct, closeModal }) => {
     formState: { errors },
   } = useForm();
 
+  const bookProduct = (data) => {
+    setIsPending(true);
+
+    data.productId = _id;
+    data.sellerEmail = sellerEmail;
+    data.sellerContact = contact;
+    data.sellerLocation = location;
+    
+    fetch('http://localhost:5000/book-product', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data);
+      if (data.acknowledged) {
+        toast.success(`Your booking for ${productName} has been added successfully.`)
+        setIsPending(false);
+        navigate('/dashboard/my-orders');
+      }
+    })
+  }
+
   return (
     <div>
       <input type="checkbox" id="confirmation-modal" className="modal-toggle" />
       <div className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Book Now</h3>
-          <form className="grid grid-cols-1 gap-3 mt-10">
+          <form onSubmit={handleSubmit(bookProduct)} className="">
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Name</span>
               </label>
               <input
                 type="text"
-                placeholder="Your Full Name"
+                value={user?.displayName}
                 className="input input-bordered w-full h-9 rounded-sm placeholder:text-gray-500"
-                aria-invalid={errors.fullName ? "true" : "false"}
-                {...register("fullName", {
-                  required: true,
-                })}
+                readOnly
+                {...register("fullName")}
               />
-              {errors?.fullName?.type === "required" && (
-                <p className="text-red-500 text-xs">Your Name is required</p>
-              )}
+
               <label className="label">
                 <span className="label-text">Email</span>
               </label>
               <input
                 type="email"
-                placeholder="Your email address"
+                value={user?.email}
                 className="input input-bordered w-full h-9 rounded-sm placeholder:text-gray-500"
-                aria-invalid={errors.email ? "true" : "false"}
-                {...register("email", {
-                  required: true,
-                })}
+                readOnly
+                {...register("email")}
               />
-              {errors?.email?.type === "required" && (
-                <p className="text-red-500 text-xs">
-                  Email Address is required
-                </p>
-              )}
+
               <label className="label">
-                <span className="label-text">Password</span>
+                <span className="label-text">Product Name</span>
               </label>
               <input
-                type="password"
-                placeholder="Your password"
+                type="text"
+                value={productName}
                 className="input input-bordered w-full h-9 rounded-sm placeholder:text-gray-500"
-                aria-invalid={errors.password ? "true" : "false"}
-                {...register("password", {
+                readOnly
+                {...register("productName")}
+              />
+
+              <label className="label">
+                <span className="label-text">Product Price</span>
+              </label>
+              <input
+                type="text"
+                value={askingPrice}
+                className="input input-bordered w-full h-9 rounded-sm placeholder:text-gray-500"
+                readOnly
+                {...register("price")}
+              />
+
+              <label className="label">
+                <span className="label-text">Phone Number</span>
+              </label>
+              <input
+                type="tel"
+                placeholder="Your contact number"
+                className="input input-bordered w-full h-9 rounded-sm placeholder:text-gray-500"
+                aria-invalid={errors.phoneNumber ? "true" : "false"}
+                {...register("phoneNumber", {
                   required: true,
                 })}
               />
-              {errors?.password?.type === "required" && (
-                <p className="text-red-500 text-xs">Password is required</p>
+              {errors?.phoneNumber?.type === "required" && (
+                <p className="text-red-500 text-xs">
+                  Your Contact Number is required
+                </p>
               )}
+
               <label className="label">
-                <span className="label-text">Register As</span>
+                <span className="label-text">Meeting Location</span>
               </label>
-              <select
-                className="select select-bordered"
-                aria-invalid={errors.role ? "true" : "false"}
-                {...register("role", {
+              <input
+                type="text"
+                placeholder="Set meeting location"
+                className="input input-bordered w-full h-9 rounded-sm placeholder:text-gray-500"
+                aria-invalid={errors.location ? "true" : "false"}
+                {...register("location", {
                   required: true,
                 })}
-              >
-                <option value="buyer">Buyer</option>
-                <option value="seller">Seller</option>
-              </select>
-              {errors?.role?.type === "required" && (
-                <p className="text-red-500 text-xs">User Type is required</p>
+              />
+              {errors?.location?.type === "required" && (
+                <p className="text-red-500 text-xs">
+                  The meeting location is required
+                </p>
               )}
 
               <div className="modal-action justify-between">
@@ -90,12 +149,12 @@ const BookingModal = ({ buyingProduct, closeModal }) => {
                   Cancel
                 </label>
                 <label htmlFor="confirmation-modal">
-                  <input
-                    className="btn btn-accent w-full"
+                  <button
+                    className={`btn btn-accent w-full ${isPending ? 'loading': null}`}
                     type="submit"
-                    value="Submit"
                     aria-label="Submit"
-                  />
+                    disabled={isPending}
+                  >Submit</button>
                 </label>
               </div>
             </div>

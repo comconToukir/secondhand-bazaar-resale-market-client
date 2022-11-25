@@ -7,7 +7,11 @@ import { UserContext } from "../../../../contexts/UserContext/UserContext";
 const MyProducts = () => {
   const { user } = useContext(UserContext);
 
-  const { data: products = [], isLoading, refetch } = useQuery({
+  const {
+    data: products = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["my-products"],
     queryFn: async () => {
       const { data } = await axios.get(
@@ -23,23 +27,33 @@ const MyProducts = () => {
 
   const addAdvertise = (id) => {
     fetch(`http://localhost:5000/advertise/${id}`, {
-      method: 'PUT',
+      method: "PUT",
     })
-    .then(() => {
-      refetch();
-    })
-    .catch(error => {
-      toast.error('Sorry! An error occurred. Please try again.')
-    })
-  }
+      .then((res) => res.json())
+      .then((data) => {
+        toast.success('Your product is now being advertised.')
+        refetch();
+      })
+      .catch((error) => {
+        toast.error("Sorry! An error occurred. Please try again.");
+      });
+  };
 
-  // const deleteProduct = (id) => {
-  //   fetch(`http://localhost:5000/delete-product/${id}`, {
-  //     method:
-  //   })
-  // }
+  const deleteProduct = (id) => {
+    fetch(`http://localhost:5000/delete-product/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then(() => {
+        toast.success('Your product has been removed')
+        refetch();
+      })
+      .catch((error) => {
+        toast.error("Sorry! An error occurred. Please try again.");
+      });
+  };
 
-  //TODO: Remove advertisement
+  //TODO: Confirmation modal, Remove advertisement
 
   return (
     <div className="px-5">
@@ -60,6 +74,7 @@ const MyProducts = () => {
               <th>Location</th>
               <th>Sold</th>
               <th>Advertisement</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -101,7 +116,26 @@ const MyProducts = () => {
                     <td>{pd.contact}</td>
                     <td>{pd.location}</td>
                     <td>{pd.isSold ? "true" : "false"}</td>
-                    <td>{pd.isAdvertised ? "running" : <button className="btn-primary py-1 px-3 rounded-sm" onClick={() => addAdvertise(pd._id)}>Advertise</button>}</td>
+                    <td>
+                      {pd.isAdvertised ? (
+                        "running"
+                      ) : (
+                        <button
+                          className="btn-primary py-1 px-3 rounded-sm"
+                          onClick={() => addAdvertise(pd._id)}
+                        >
+                          Advertise
+                        </button>
+                      )}
+                    </td>
+                    <td>
+                      <button
+                        className="btn-error py-1 px-3 rounded-sm"
+                        onClick={() => deleteProduct(pd._id)}
+                      >
+                        Delete
+                      </button>
+                    </td>
                   </tr>
                 ))
               : null}

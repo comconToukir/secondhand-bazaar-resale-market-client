@@ -32,7 +32,7 @@ const HeaderNav = ({ dashboard }) => {
             <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
           </svg>
         </button>
-        <ul className="p-2 bg-base-200 z-50">
+        <ul className="bg-base-200 z-50 w-52">
           {isLoading ? (
             <button className="loading">Loading</button>
           ) : (
@@ -81,7 +81,7 @@ const HeaderNav = ({ dashboard }) => {
           </label>
           <ul
             tabIndex={0}
-            className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+            className="menu menu-compact dropdown-content mt-3 shadow bg-base-200 rounded-box w-52"
           >
             {NavLinks}
           </ul>

@@ -1,11 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import toast from "react-hot-toast";
+import ConfirmationModal from "../../../../components/ConfirmationModal/ConfirmationModal";
 import { UserContext } from "../../../../contexts/UserContext/UserContext";
 
 const MyProducts = () => {
+  const [deletingProduct, setDeletingProduct] = useState(null);
   const { user } = useContext(UserContext);
+
+  const closeModal = () => {
+    setDeletingProduct(null);
+  };
 
   const {
     data: products = [],
@@ -23,15 +29,13 @@ const MyProducts = () => {
 
   if (isLoading) return "loading";
 
-  // console.log(products);
-
   const addAdvertise = (id) => {
     fetch(`http://localhost:5000/advertise/${id}`, {
       method: "PUT",
     })
       .then((res) => res.json())
       .then((data) => {
-        toast.success('Your product is now being advertised.')
+        toast.success("Your product is now being advertised.");
         refetch();
       })
       .catch((error) => {
@@ -45,7 +49,7 @@ const MyProducts = () => {
     })
       .then((res) => res.json())
       .then(() => {
-        toast.success('Your product has been removed')
+        toast.success("Your product has been removed");
         refetch();
       })
       .catch((error) => {
@@ -129,18 +133,29 @@ const MyProducts = () => {
                       )}
                     </td>
                     <td>
-                      <button
+                      <label
+                        htmlFor="confirmation-modal"
                         className="btn-error py-1 px-3 rounded-sm"
-                        onClick={() => deleteProduct(pd._id)}
+                        onClick={() => setDeletingProduct(pd)}
                       >
                         Delete
-                      </button>
+                      </label>
                     </td>
                   </tr>
                 ))
               : null}
           </tbody>
         </table>
+        {deletingProduct ? (
+          <ConfirmationModal
+            modalTitle={deletingProduct.productName}
+            message={`Warning! Deleted product can't be recovered`}
+            confirmAction={deleteProduct}
+            buttonText="Delete"
+            modalData={deletingProduct._id}
+            closeModal={closeModal}
+          />
+        ) : null}
       </div>
     </div>
   );

@@ -1,7 +1,10 @@
 import React from "react";
 
 const ProductCard = ({
+  openBookModal,
+  productData,
   productData: {
+    _id,
     productName,
     image,
     askingPrice,
@@ -13,11 +16,15 @@ const ProductCard = ({
   },
 }) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-[300px,1fr]">
+    <div className="grid grid-cols-1 md:grid-cols-[300px,1fr] h-min shadow-md border p-2">
       <div>
-        <img src={image} className="md:h-48 max-h-64 w-full object-cover" alt="" />
+        <img
+          src={image}
+          className="md:h-60 max-h-72 w-full object-cover"
+          alt=""
+        />
       </div>
-      <div className="px-3 flex flex-col">
+      <div className="px-2 flex flex-col">
         <h2 className="text-2xl font-medium">{productName}</h2>
         <div className="grid grid-cols-2">
           <div>
@@ -33,8 +40,14 @@ const ProductCard = ({
         <div className="flex-grow">
           <p>Description: {description}</p>
         </div>
-        <div className="flex justify-end">
-          <button className="btn btn-secondary">Buy Now</button>
+        <div className="flex justify-end py-2">
+          <label
+            onClick={() => openBookModal(productData)}
+            htmlFor="confirmation-modal"
+            className="btn btn-sm btn-primary"
+          >
+            Buy now
+          </label>
         </div>
       </div>
     </div>

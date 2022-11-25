@@ -67,14 +67,18 @@ const AddProduct = () => {
                 navigate("/dashboard/my-products");
                 setIsAdding(false);
               }
-            });
+            }).catch(error => {
+              setIsAdding(false);
+              toast.error('Sorry! Something unexpected happened. Please try again.')
+              console.log(error);
+            })
         }
       });
   };
 
   return (
     <div>
-      <div>
+      <div className="">
         <h1 className="text-3xl font-semibold my-5 text-center">
           Add Your Product
         </h1>
@@ -174,17 +178,17 @@ const AddProduct = () => {
             </label>
             <select
               className="select select-bordered"
-              aria-invalid={errors.category ? "true" : "false"}
+              aria-invalid={errors.categoryId ? "true" : "false"}
               disabled={isLoading}
-              {...register("category", {
+              {...register("categoryId", {
                 required: true,
               })}
             >
               {
-                categories.map(ct => <option value={ct._id}>{ct.categoryName}</option>)
+                categories.map(ct => <option key={ct._id} value={ct._id}>{ct.categoryName}</option>)
               }
             </select>
-            {errors?.category?.type === "required" && (
+            {errors?.categoryId?.type === "required" && (
               <p className="text-red-500 text-xs">
                 Product category is required
               </p>

@@ -15,6 +15,8 @@ const Login = () => {
 
   const from = location.state?.from?.pathname || "/";
 
+  console.log(location)
+
   const {
     register,
     handleSubmit,
@@ -86,7 +88,7 @@ const Login = () => {
                 </Link>
               </p>
           <div className="divider my-10">Or Login With</div>
-          <SocialLogin />
+          <SocialLogin from={from} />
         </div>
       </div>
     </div>

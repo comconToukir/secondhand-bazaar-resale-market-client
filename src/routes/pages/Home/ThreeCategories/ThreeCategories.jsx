@@ -28,7 +28,7 @@ const ThreeCategories = () => {
             onClick={() => handleClick(ct._id)}
             className="h-36 group grid place-items-center bg-base-200 rounded-sm cursor-pointer  transition-all"
           >
-            <p className="text-2xl font-semibold group group-hover:text-3xl group-hover:drop-shadow-lg transition-all ">
+            <p className="text-2xl font-semibold group group-hover:text-3xl group-hover:drop-shadow-lg transition-all">
               {ct.categoryName}
             </p>
           </div>

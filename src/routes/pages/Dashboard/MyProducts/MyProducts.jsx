@@ -68,7 +68,7 @@ const MyProducts = () => {
               <th>Price</th>
               <th>Retail</th>
               <th>Condition</th>
-              <th>Category</th>
+              {/* <th>Category</th> */}
               <th>Description</th>
               <th>Contact</th>
               <th>Location</th>
@@ -102,7 +102,7 @@ const MyProducts = () => {
                     <td>{pd.askingPrice}</td>
                     <td>{pd.retailPrice}</td>
                     <td>{pd.productCondition}</td>
-                    <td>{pd.category}</td>
+                    {/* <td>{pd.category}</td> */}
                     <td>
                       <div
                         className="tooltip tooltip-right max-w-[150px]"
@@ -118,7 +118,7 @@ const MyProducts = () => {
                     <td>{pd.isSold ? "true" : "false"}</td>
                     <td>
                       {pd.isAdvertised ? (
-                        "running"
+                        "Running"
                       ) : (
                         <button
                           className="btn-primary py-1 px-3 rounded-sm"
@@ -139,16 +139,6 @@ const MyProducts = () => {
                   </tr>
                 ))
               : null}
-
-            {/* <tr>
-              <th>1</th>
-              <td>Cy Ganderton</td>
-              <td>Quality Control Specialist</td>
-              <td>Littel, Schaden and Vandervort</td>
-              <td>Canada</td>
-              <td>12/16/2020</td>
-              <td>Blue</td>
-            </tr> */}
           </tbody>
         </table>
       </div>

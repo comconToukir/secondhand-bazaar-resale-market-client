@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import { useContext, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { useForm } from "react-hook-form";
@@ -13,6 +14,14 @@ const AddProduct = () => {
   const [isAdding, setIsAdding] = useState(false);
   const { user } = useContext(UserContext);
 
+  const { data: categories = [], isLoading } = useQuery({
+    queryKey: ["categories"],
+    queryFn: () =>
+      fetch(`http://localhost:5000/get-categories`).then((res) =>
+        res.json()
+      ),
+  });
+
   const {
     register,
     handleSubmit,
@@ -22,6 +31,8 @@ const AddProduct = () => {
 
   const onSubmit = (data) => {
     setIsAdding(true);
+
+    console.log(data)
 
     const image = data.image[0];
     const formData = new FormData();
@@ -164,14 +175,14 @@ const AddProduct = () => {
             <select
               className="select select-bordered"
               aria-invalid={errors.category ? "true" : "false"}
+              disabled={isLoading}
               {...register("category", {
                 required: true,
               })}
             >
-              <option value="graphicsCard">Graphics Card</option>
-              <option value="ram">RAM</option>
-              <option value="motherboard">Motherboard</option>
-              <option value="powerSupply">Power Supply</option>
+              {
+                categories.map(ct => <option value={ct._id}>{ct.categoryName}</option>)
+              }
             </select>
             {errors?.category?.type === "required" && (
               <p className="text-red-500 text-xs">

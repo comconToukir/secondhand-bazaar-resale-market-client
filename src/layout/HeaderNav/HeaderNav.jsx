@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import React, { useContext } from "react";
 import { Link, NavLink } from "react-router-dom";
 
@@ -6,6 +7,12 @@ import { UserContext } from "../../contexts/UserContext/UserContext";
 
 const HeaderNav = ({ dashboard }) => {
   const { user, logOutUser } = useContext(UserContext);
+
+  const { data: categories = [], isLoading } = useQuery({
+    queryKey: ["categories"],
+    queryFn: () =>
+      fetch(`http://localhost:5000/get-categories`).then((res) => res.json()),
+  });
 
   const NavLinks = (
     <>
@@ -25,13 +32,16 @@ const HeaderNav = ({ dashboard }) => {
             <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
           </svg>
         </button>
-        <ul className="p-2">
-          <li>
-            <a>Submenu 1</a>
-          </li>
-          <li>
-            <a>Submenu 2</a>
-          </li>
+        <ul className="p-2 bg-base-200 z-50">
+          {isLoading ? (
+            <button className="loading">Loading</button>
+          ) : (
+            categories.map((ct) => (
+              <li>
+                <NavLink to={`/category/${ct._id}`}>{ct.categoryName}</NavLink>
+              </li>
+            ))
+          )}
         </ul>
       </li>
       <li>
@@ -47,7 +57,7 @@ const HeaderNav = ({ dashboard }) => {
 
   return (
     <div
-      className={`navbar bg-base-100 mx-auto ${
+      className={`navbar bg-base-200 mx-auto ${
         !dashboard ? "max-w-screen-xl" : null
       }`}
     >

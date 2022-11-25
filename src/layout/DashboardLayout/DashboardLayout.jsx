@@ -10,22 +10,20 @@ const DashboardLayout = () => {
 
   const [role, isRoleLoading] = useCheckRole(user?.email);
 
-  console.log(role, isRoleLoading);
+  // console.log(role, isRoleLoading);
 
   if (isRoleLoading) return "loading";
 
   const dashboardRoutes = (
     <>
-      {role === "buyer" ? (
-        <>
-          <li>
-            <NavLink to="/">My Orders</NavLink>
-          </li>
-          <li>
-            <NavLink to="/wishlist">My Wishlist</NavLink>
-          </li>
-        </>
-      ) : null}
+      <>
+        <li>
+          <NavLink to="/">My Orders</NavLink>
+        </li>
+        <li>
+          <NavLink to="/wishlist">My Wishlist</NavLink>
+        </li>
+      </>
       {role === "seller" ? (
         <>
           <li>

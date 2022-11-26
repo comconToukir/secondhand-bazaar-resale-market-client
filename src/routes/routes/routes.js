@@ -5,10 +5,14 @@ import Blog from "../pages/Blog/Blog";
 import Categories from "../pages/Categories/Categories";
 import Category from "../pages/Category/Category";
 import AddProduct from "../pages/Dashboard/AddProduct/AddProduct";
+import MyOrders from "../pages/Dashboard/MyOrders/MyOrders";
 import MyProducts from "../pages/Dashboard/MyProducts/MyProducts";
 import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import Register from "../pages/Register/Register";
+import WishList from './../pages/Dashboard/WishList/WishList';
+import AllBuyers from './../pages/Dashboard/AllBuyers/AllBuyers';
+import AllSellers from './../pages/Dashboard/AllSellers/AllSellers';
 
 const router = createBrowserRouter([
   {
@@ -53,6 +57,22 @@ const router = createBrowserRouter([
       {
         path: 'my-products',
         element: <MyProducts />,
+      },
+      {
+        path: 'my-orders',
+        element: <MyOrders />,
+      },
+      {
+        path: 'wishList',
+        element: <WishList />,
+      },
+      {
+        path: 'all-buyers',
+        element: <AllBuyers />,
+      },
+      {
+        path: 'all-sellers',
+        element: <AllSellers />,
       },
     ]
   }

@@ -65,6 +65,7 @@ const UserProvider = ({ children }) => {
     updateUser,
     user,
     loading,
+    setLoading,
   };
 
   return (

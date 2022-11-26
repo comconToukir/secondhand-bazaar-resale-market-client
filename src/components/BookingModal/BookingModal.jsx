@@ -7,6 +7,7 @@ import { UserContext } from "../../contexts/UserContext/UserContext";
 const BookingModal = ({
   buyingProduct: {
     _id,
+    image,
     productName,
     askingPrice,
     sellerEmail,
@@ -30,12 +31,13 @@ const BookingModal = ({
     setIsPending(true);
 
     data.productId = _id;
+    data.image = image;
     data.sellerEmail = sellerEmail;
     data.sellerContact = contact;
     data.sellerLocation = location;
     
     fetch('http://localhost:5000/book-product', {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         'content-type': 'application/json'
       },

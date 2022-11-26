@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 import AuthButton from "../../../components/AuthButton/AuthButton";
 
 const Login = () => {
-  const { logInUser } = useContext(UserContext);
+  const { logInUser, loading, setLoading } = useContext(UserContext);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -27,6 +27,7 @@ const Login = () => {
   const onSubmit = (data) => {
     const email = data.email;
     const password = data.password;
+
     logInUser(email, password)
       .then((result) => {
         navigate(from);
@@ -34,6 +35,7 @@ const Login = () => {
       .catch((error) => {
         toast.error(error.code);
         console.error(error);
+        setLoading(false)
       });
   }
 
@@ -78,7 +80,7 @@ const Login = () => {
                 <p className="text-red-500 text-xs">Password is required</p>
               )}
               
-              <AuthButton className="mt-5 mx-auto">Login</AuthButton>
+              <AuthButton loading={loading} className={`mt-5 mx-auto`}>Login</AuthButton>
             </div>
           </form>
           <p className="mt-8 text-center text-sm">

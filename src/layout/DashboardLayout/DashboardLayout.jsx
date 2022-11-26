@@ -19,10 +19,10 @@ const DashboardLayout = () => {
       {role === "buyer" ? (
         <>
           <li>
-            <NavLink to="/my-orders">My Orders</NavLink>
+            <NavLink to="/dashboard/my-orders">My Orders</NavLink>
           </li>
           <li>
-            <NavLink to="/wishlist">My Wishlist</NavLink>
+            <NavLink to="/dashboard/wishlist">My Wishlist</NavLink>
           </li>
         </>
       ) : null}
@@ -36,6 +36,19 @@ const DashboardLayout = () => {
           </li>
           <li>
             <NavLink to="/dashboard/my-buyers">My Buyers</NavLink>
+          </li>
+        </>
+      ) : null}
+      {role === "admin" ? (
+        <>
+          <li>
+            <NavLink to="/dashboard/all-sellers">All Sellers</NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/all-buyers">All Buyers</NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/reported-items">Reported Items</NavLink>
           </li>
         </>
       ) : null}

@@ -13,11 +13,14 @@ import Register from "../pages/Register/Register";
 import WishList from './../pages/Dashboard/WishList/WishList';
 import AllBuyers from './../pages/Dashboard/AllBuyers/AllBuyers';
 import AllSellers from './../pages/Dashboard/AllSellers/AllSellers';
+import PaymentPage from "../pages/Dashboard/PaymentPage/PaymentPage.jsx";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <MainLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: '/',
@@ -49,6 +52,7 @@ const router = createBrowserRouter([
   {
     path: '/dashboard',
     element: <DashboardLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: 'add-product',
@@ -73,6 +77,10 @@ const router = createBrowserRouter([
       {
         path: 'all-sellers',
         element: <AllSellers />,
+      },
+      {
+        path: 'payment/:id',
+        element: <PaymentPage />,
       },
     ]
   }

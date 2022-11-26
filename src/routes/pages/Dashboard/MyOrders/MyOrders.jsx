@@ -1,14 +1,15 @@
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
-import { useContext, useState } from 'react';
-import toast from 'react-hot-toast';
-import { UserContext } from '../../../../contexts/UserContext/UserContext';
-import ConfirmationModal from './../../../../components/ConfirmationModal/ConfirmationModal';
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { useContext, useState } from "react";
+import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
+import { UserContext } from "../../../../contexts/UserContext/UserContext";
+import ConfirmationModal from "./../../../../components/ConfirmationModal/ConfirmationModal";
 
 //TODO: table, payment,  opt:remove booking,
 
 const MyOrders = () => {
-  const [deletingProduct, setDeletingProduct] = useState(null)
+  const [deletingProduct, setDeletingProduct] = useState(null);
   const { user } = useContext(UserContext);
 
   const {
@@ -21,14 +22,14 @@ const MyOrders = () => {
       const { data } = await axios.get(
         `http://localhost:5000/book-product?email=${user.email}`
       );
-      console.log(data)
+      console.log(data);
       return data;
     },
   });
 
   if (isLoading) return "loading";
 
-  const closeModal = () => setDeletingProduct(null); 
+  const closeModal = () => setDeletingProduct(null);
 
   const deleteProduct = (id) => {
     fetch(`http://localhost:5000/book-product?email=${user.email}&id=${id}`, {
@@ -106,19 +107,19 @@ const MyOrders = () => {
                     </td> */}
                     <td>{od.sellerContact}</td>
                     {/* <td>{pd.location}</td> */}
-                    <td>{od.isPaid ? "true" : "false"}</td>
-                    {/* <td>
-                      {pd.isAdvertised ? (
-                        "Running"
+                    <td>
+                      {od.isPaid ? (
+                        "Paid"
                       ) : (
-                        <button
+                        <Link
                           className="btn-primary py-1 px-3 rounded-sm"
-                          onClick={() => addAdvertise(pd._id)}
+                          to={`/dashboard/payment/${od._id}`}
+                          // onClick={() => givePayment(pd._id)}
                         >
-                          Advertise
-                        </button>
+                          Pay
+                        </Link>
                       )}
-                    </td> */}
+                    </td>
                     <td>
                       <label
                         htmlFor="confirmation-modal"

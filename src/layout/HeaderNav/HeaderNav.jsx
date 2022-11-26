@@ -32,7 +32,7 @@ const HeaderNav = ({ dashboard }) => {
             <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
           </svg>
         </button>
-        <ul className="bg-base-200 z-50 w-52">
+        <ul className="bg-base-200 z-50 w-52 py-0">
           {isLoading ? (
             <button className="loading">Loading</button>
           ) : (

@@ -61,12 +61,12 @@ const MyProducts = () => {
 
   return (
     <div className="px-5">
-      <h1 className="text-2xl font-semibold mb-5">My products</h1>
+      <h1 className="text-2xl font-semibold mt-3 mb-5">My products</h1>
       <div className="overflow-x-auto">
         <table className="table table-compact w-full">
           <thead>
             <tr>
-              <th></th>
+              <th className="rounded-none"></th>
               <th>Picture</th>
               <th>Name</th>
               <th>Price</th>
@@ -78,14 +78,14 @@ const MyProducts = () => {
               <th>Location</th>
               <th>Sold</th>
               <th>Advertisement</th>
-              <th>Actions</th>
+              <th className="rounded-none">Actions</th>
             </tr>
           </thead>
           <tbody>
             {products
               ? products.map((pd, idx) => (
                   <tr key={pd._id}>
-                    <th>{idx}</th>
+                    <th>{idx + 1}</th>
                     <td>
                       <img
                         src={pd.image}

@@ -22,8 +22,10 @@ const MyOrders = () => {
       const { data } = await axios.get(
         `http://localhost:5000/book-product?email=${user.email}`
       );
-      console.log(data);
-      return data;
+
+      // console.log(data);
+      const filteredByBoughtBy = data.filter(dt => dt.boughtBy === user.email || !dt.boughtBy )
+      return filteredByBoughtBy;
     },
   });
 
@@ -49,12 +51,12 @@ const MyOrders = () => {
 
   return (
     <div className="px-5">
-      <h1 className="text-2xl font-semibold mb-5">My Bookings</h1>
+      <h1 className="text-2xl font-semibold mt-3 mb-5">My Bookings</h1>
       <div className="overflow-x-auto">
         <table className="table table-compact w-full">
-          <thead>
-            <tr>
-              <th></th>
+          <thead  >
+            <tr >
+              <th className="rounded-none"></th>
               <th>Picture</th>
               <th>Name</th>
               <th>Price</th>
@@ -66,14 +68,14 @@ const MyOrders = () => {
               {/* <th>Location</th> */}
               <th>Paid</th>
               {/* <th>Advertisement</th> */}
-              <th>Actions</th>
+              <th className="rounded-none">Actions</th>
             </tr>
           </thead>
           <tbody>
             {orders
               ? orders.map((od, idx) => (
                   <tr key={od._id}>
-                    <th>{idx}</th>
+                    <th>{idx + 1}</th>
                     <td>
                       <img
                         src={od.image}
@@ -114,7 +116,6 @@ const MyOrders = () => {
                         <Link
                           className="btn-primary py-1 px-3 rounded-sm"
                           to={`/dashboard/payment/${od._id}`}
-                          // onClick={() => givePayment(pd._id)}
                         >
                           Pay
                         </Link>

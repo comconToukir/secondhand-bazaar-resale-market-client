@@ -7,6 +7,7 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import { useContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { UserContext } from "../../../../contexts/UserContext/UserContext";
 
 const options = {
@@ -24,7 +25,9 @@ const options = {
   },
 };
 
-const CheckoutForm = ({ booking: { price, _id } }) => {
+const CheckoutForm = ({
+  booking: { price, _id, productId, productName, bookers },
+}) => {
   const [clientSecret, setClientSecret] = useState(null);
   const [processing, setProcessing] = useState(false);
   const [success, setSuccess] = useState(null);
@@ -104,9 +107,13 @@ const CheckoutForm = ({ booking: { price, _id } }) => {
         transactionId: paymentIntent.id,
         transactionTime: new Date(),
         bookingId: _id,
+        productId: productId,
+        productName: productName,
         email: user.email,
         price: price,
       };
+
+      console.log(payment);
 
       fetch("http://localhost:5000/save-payment-info", {
         method: "POST",
@@ -118,6 +125,7 @@ const CheckoutForm = ({ booking: { price, _id } }) => {
         .then((res) => res.json())
         .then((data) => {
           if (data.insertedId) {
+            toast.success("Your payment was processed successfully");
             setSuccess("Your payment was processed successfully");
             setTransactionId(paymentIntent.id);
           }
@@ -129,7 +137,7 @@ const CheckoutForm = ({ booking: { price, _id } }) => {
 
   return (
     <div className="text-center">
-      <form className="form-control w-72" onSubmit={handleSubmit}>
+      <form className="form-control w-72 mx-auto" onSubmit={handleSubmit}>
         <label className="label mb-[-5px]">
           <span className="label-text">Card Number</span>
         </label>
@@ -165,10 +173,10 @@ const CheckoutForm = ({ booking: { price, _id } }) => {
           Pay ${price}
         </button>
       </form>
-      <div>
+      <div className="mt-7">
         <h6>{cardError}</h6>
         {success ? (
-          <div>
+          <div className="text-green-700 font-medium">
             <p>{success}</p>
             <p>Your transaction id: {transactionId}</p>
           </div>

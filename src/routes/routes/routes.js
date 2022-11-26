@@ -15,6 +15,8 @@ import AllBuyers from './../pages/Dashboard/AllBuyers/AllBuyers';
 import AllSellers from './../pages/Dashboard/AllSellers/AllSellers';
 import PaymentPage from "../pages/Dashboard/PaymentPage/PaymentPage.jsx";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
+import MyBuyers from "../pages/Dashboard/MyBuyers/MyBuyers";
+import ReportedItems from './../pages/Dashboard/ReportedItems/ReportedItems';
 
 const router = createBrowserRouter([
   {
@@ -63,6 +65,10 @@ const router = createBrowserRouter([
         element: <MyProducts />,
       },
       {
+        path: 'my-buyers',
+        element: <MyBuyers />,
+      },
+      {
         path: 'my-orders',
         element: <MyOrders />,
       },
@@ -77,6 +83,10 @@ const router = createBrowserRouter([
       {
         path: 'all-sellers',
         element: <AllSellers />,
+      },
+      {
+        path: 'reported-items',
+        element: <ReportedItems />,
       },
       {
         path: 'payment/:id',

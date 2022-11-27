@@ -1,4 +1,5 @@
 import React from "react";
+import { FaRegCheckCircle } from "react-icons/fa";
 
 const ProductCard = ({
   openBookModal,
@@ -13,8 +14,11 @@ const ProductCard = ({
     description,
     contact,
     location,
+    sellerData,
   },
 }) => {
+  const [{ email, isVerified }] = sellerData;
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-[300px,1fr] h-min shadow-md border p-2">
       <div>
@@ -26,6 +30,15 @@ const ProductCard = ({
       </div>
       <div className="px-2 flex flex-col">
         <h2 className="text-2xl font-medium">{productName}</h2>
+        <div className="flex items-center gap-2">
+          <p>Seller: {email}</p>
+          {isVerified ? (
+            <span className="text-blue-500 tooltip tooltip-right"
+            data-tip="Verified">
+              <FaRegCheckCircle />
+            </span>
+          ) : null}
+        </div>
         <div className="grid grid-cols-2">
           <div>
             <p>Asking Price: ${askingPrice}</p>

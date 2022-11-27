@@ -32,6 +32,8 @@ const MyBuyers = () => {
     },
   });
 
+  if (isLoading) return "loading";
+
   return (
     <div className="px-5">
       <h1 className="text-2xl font-semibold mt-3 mb-5">My products</h1>

@@ -27,8 +27,6 @@ const MyProducts = () => {
     },
   });
 
-  if (isLoading) return "loading";
-
   const addAdvertise = (id) => {
     fetch(`http://localhost:5000/advertise/${id}`, {
       method: "PUT",
@@ -56,6 +54,8 @@ const MyProducts = () => {
         toast.error("Sorry! An error occurred. Please try again.");
       });
   };
+
+  if (isLoading) return "loading";
 
   //TODO: Confirmation modal, Remove advertisement
 
@@ -135,7 +135,7 @@ const MyProducts = () => {
                     <td>
                       <label
                         htmlFor="confirmation-modal"
-                        className="btn-error py-1 px-3 rounded-sm"
+                        className="btn-error py-1 px-3 rounded-sm cursor-pointer hover:bg-red-500"
                         onClick={() => setDeletingProduct(pd)}
                       >
                         Delete

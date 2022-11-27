@@ -29,11 +29,11 @@ const PaymentPage = () => {
 
   return (
     <div className="grid place-items-center my-12">
-      <img src={image} className="h-48" alt="" />
-      <h1 className="text-xl">
+      <img src={image} className="h-48 max-w-xl" alt="" />
+      <h1 className="text-xl mt-9">
         Payment for <span className="font-medium">{productName}</span>{" "}
       </h1>
-      <p>Payment of: <span className="font-medium">${price}</span></p>
+      <p className="mb-7">Payment of: <span className="font-medium">${price}</span></p>
       <Elements stripe={stripePromise}>
         <CheckoutForm booking={booking} />
       </Elements>

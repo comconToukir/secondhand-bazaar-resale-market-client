@@ -26,6 +26,7 @@ const AllSellers = () => {
     })
     .then(res => res.json())
     .then(data => {
+      
       refetch();
       if (data.modifiedCount > 0) {
         toast.success("The seller has been verified successfully.")
@@ -36,8 +37,23 @@ const AllSellers = () => {
       toast.error("An error occurred. Please check browser console.")
     })
   };
-  const removeSeller = (id) => {
-    console.log(id);
+
+  const removeSeller = (email) => {
+    fetch(`http://localhost:5000/remove-seller?email=${email}`, {
+      method: 'DELETE'
+    })
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      refetch();
+      if (data.deletedCount > 0) {
+        toast.success("The seller has been removed successfully.")
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      toast.error("An error occurred. Please check browser console.")
+    })
   };
 
   console.log(verifyingSeller);
@@ -98,7 +114,7 @@ const AllSellers = () => {
             message={`Warning! Removing seller will remove all his available product.`}
             confirmAction={removeSeller}
             buttonText="Delete"
-            modalData={deletingSeller._id}
+            modalData={deletingSeller.email}
             closeModal={closeModal}
           />
         ) : null}

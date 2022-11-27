@@ -1,8 +1,14 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
+import { useState } from 'react';
+import toast from 'react-hot-toast';
+import ConfirmationModal from '../../../../components/ConfirmationModal/ConfirmationModal';
 
 const AllBuyers = () => {
   // const { user } = useContext(UserContext);
+  const [deletingBuyer, setDeletingBuyer] = useState(null);
+
+  const closeModal = () => setDeletingBuyer(null);
 
   const {
     data: buyers = [],
@@ -19,9 +25,24 @@ const AllBuyers = () => {
     },
   });
 
-  if (isLoading) return "loading";
+  const removeBuyer = (id) => {
+    fetch(`http://localhost:5000/remove-buyer?id=${id}`, {
+      method: 'DELETE'
+    })
+    .then(res => res.json())
+    .then(data => {
+      refetch();
+      if (data.deletedCount > 0) {
+        toast.success("The buyer has been removed successfully.")
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      toast.error("An error occurred. Please check browser console.")
+    })
+  };
 
-  if (buyers.length === 0) return <div className="mx-5 my-3 text-xl">Your products haven't been sold yet.</div>
+  if (isLoading) return "loading";
 
   return (
     <div className="px-5">
@@ -33,7 +54,8 @@ const AllBuyers = () => {
               <th className="rounded-none"></th>
               <th>id</th>
               <th>Name</th>
-              <th className="rounded-none">Email</th>
+              <th>Email</th>
+              <th className="rounded-none">Action</th>
             </tr>
           </thead>
           <tbody>
@@ -48,11 +70,30 @@ const AllBuyers = () => {
                       {byr.name}
                     </td>
                     <td>{byr.email}</td>
+                    <td>
+                    <label
+                        htmlFor="confirmation-modal"
+                        className="btn-error py-1 px-3 rounded-sm cursor-pointer hover:bg-red-500"
+                        onClick={() => setDeletingBuyer(byr)}
+                      >
+                        Remove
+                      </label>
+                    </td>
                   </tr>
                 ))
               : null}
           </tbody>
         </table>
+        {deletingBuyer ? (
+          <ConfirmationModal
+            modalTitle={`Remove ${deletingBuyer.name}`}
+            message={`Warning! Removed buyer cannot be recovered.`}
+            confirmAction={removeBuyer}
+            buttonText="Delete"
+            modalData={deletingBuyer._id}
+            closeModal={closeModal}
+          />
+        ) : null}
       </div>
     </div>
   );

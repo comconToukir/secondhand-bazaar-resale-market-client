@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useContext, useState } from "react";
 import toast from "react-hot-toast";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import BookingModal from "../../../../components/BookingModal/BookingModal";
 import ProductCard from "../../../../components/ProductCard/ProductCard";
 import { UserContext } from "../../../../contexts/UserContext/UserContext";
@@ -30,7 +30,7 @@ const HomeAdvertisement = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["advertised-products"],
+    queryKey: ["3-advertised-products"],
     queryFn: async () => {
       const { data } = await axios.get(`http://localhost:5000/v2/home-advertisements`);
       return data;
@@ -41,8 +41,9 @@ const HomeAdvertisement = () => {
 
   return (
     <section className="mt-40 px-3">
-      <h1 className="border-b-2">
-        <span className="">Advertised Products</span>
+      <h1 className="border-b-2 border-gray-800 flex justify-between">
+        <span className="px-4 py-1 bg-gray-800 text-lg text-white">Advertised Products</span>
+        <Link to="/advertisements" className="px-4 py-1 bg-gray-600 text-lg text-white">See All</Link>
       </h1>
       <div className="grid gap-4 my-4">
         {products.map((pd) => (

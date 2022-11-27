@@ -17,6 +17,7 @@ import PaymentPage from "../pages/Dashboard/PaymentPage/PaymentPage.jsx";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import MyBuyers from "../pages/Dashboard/MyBuyers/MyBuyers";
 import ReportedItems from './../pages/Dashboard/ReportedItems/ReportedItems';
+import Advertisements from "../pages/Advertisements/Advertisements";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,11 @@ const router = createBrowserRouter([
         path: 'category/:id',
         loader: ({ params }) => fetch(`http://localhost:5000/v2/category/${params.id}`),
         element: <Category />
+      },
+      {
+        path: 'advertisements',
+        loader: () => fetch('http://localhost:5000/v2/advertisements'),
+        element: <Advertisements />
       },
       {
         path: 'blog',

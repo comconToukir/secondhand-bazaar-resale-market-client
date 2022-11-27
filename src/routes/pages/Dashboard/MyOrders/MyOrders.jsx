@@ -23,8 +23,10 @@ const MyOrders = () => {
         `http://localhost:5000/book-product?email=${user.email}`
       );
 
-      // console.log(data);
-      const filteredByBoughtBy = data.filter(dt => dt.boughtBy === user.email || !dt.boughtBy )
+      console.log(data);
+      const filteredByBoughtBy = data.filter(
+        (dt) => dt.boughtBy === user.email || !dt.boughtBy
+      );
       return filteredByBoughtBy;
     },
   });
@@ -54,20 +56,15 @@ const MyOrders = () => {
       <h1 className="text-2xl font-semibold mt-3 mb-5">My Bookings</h1>
       <div className="overflow-x-auto">
         <table className="table table-compact w-full">
-          <thead  >
-            <tr >
+          <thead>
+            <tr>
               <th className="rounded-none"></th>
               <th>Picture</th>
               <th>Name</th>
               <th>Price</th>
-              {/* <th>Retail</th> */}
               <th>Seller Email</th>
-              {/* <th>Category</th> */}
-              {/* <th>Description</th> */}
               <th>Contact</th>
-              {/* <th>Location</th> */}
               <th>Paid</th>
-              {/* <th>Advertisement</th> */}
               <th className="rounded-none">Actions</th>
             </tr>
           </thead>
@@ -94,24 +91,13 @@ const MyOrders = () => {
                       </div>
                     </td>
                     <td>{od.price}</td>
-                    {/* <td>{pd.retailPrice}</td> */}
                     <td>{od.sellerEmail}</td>
-                    {/* <td>{pd.category}</td> */}
-                    {/* <td>
-                      <div
-                        className="tooltip tooltip-right max-w-[150px]"
-                        data-tip={pd.description}
-                      >
-                        <div className="max-w-[120px] text-ellipsis overflow-hidden">
-                          {pd.description}
-                        </div>
-                      </div>
-                    </td> */}
                     <td>{od.sellerContact}</td>
-                    {/* <td>{pd.location}</td> */}
                     <td>
                       {od.isPaid ? (
-                        "Paid"
+                        <span className="text-green-600">Paid</span>
+                      ) : od.sellerRemoved ? (
+                        <span className="text-gray-400">Unavailable</span>
                       ) : (
                         <Link
                           className="btn-primary py-1 px-3 rounded-sm"

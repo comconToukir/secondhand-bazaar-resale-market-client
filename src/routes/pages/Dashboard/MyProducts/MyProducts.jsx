@@ -57,6 +57,8 @@ const MyProducts = () => {
 
   if (isLoading) return "loading";
 
+  if (products.length === 0) return <div className="mx-5 my-3 text-xl">Your have not yet added any product.</div>
+
   //TODO: Confirmation modal, Remove advertisement
 
   return (

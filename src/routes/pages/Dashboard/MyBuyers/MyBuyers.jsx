@@ -16,23 +16,19 @@ const MyBuyers = () => {
       const { data } = await axios.get(
         `http://localhost:5000/sold-products?email=${user.email}`
       );
-      
-      console.log(data);
-
-      console.log(data[0].boughtBy);
 
       data.forEach(dt => {
-        const buyerInfo = dt.bookers.filter(brs => brs.bookerEMail !== dt.boughtBy);
+        const buyerInfo = dt.bookers.filter(brs => brs.bookerEMail !== dt?.boughtBy);
         dt.boughtBy = buyerInfo[0];
       });
-
-      console.log(data);
 
       return data;
     },
   });
 
   if (isLoading) return "loading";
+
+  if (buyers.length === 0) return <div className="mx-5 my-3 text-xl">Your products haven't been sold yet.</div>
 
   return (
     <div className="px-5">

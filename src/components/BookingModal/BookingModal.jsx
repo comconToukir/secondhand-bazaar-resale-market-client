@@ -3,14 +3,16 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext/UserContext";
+import useCheckRole from "../../hooks/useCheckRole";
 
 const BookingModal = ({
+  buyingProduct,
   buyingProduct: {
     _id,
     image,
     productName,
     askingPrice,
-    sellerEmail,
+    sellerData,
     location,
     contact,
   },
@@ -18,7 +20,13 @@ const BookingModal = ({
 }) => {
   const [ isPending, setIsPending ] = useState(false);
   const { user } = useContext(UserContext);
-  const navigate = useNavigate()
+  const [role, isRoleLoading] = useCheckRole(user?.email);
+
+  const navigate = useNavigate();
+
+  // console.log(sellerData);
+
+  const email = sellerData[0].email;
 
   const {
     register,
@@ -32,7 +40,7 @@ const BookingModal = ({
 
     data.productId = _id;
     data.image = image;
-    data.sellerEmail = sellerEmail;
+    data.sellerEmail = email;
     data.sellerContact = contact;
     data.sellerLocation = location;
     
@@ -150,12 +158,12 @@ const BookingModal = ({
                 >
                   Cancel
                 </label>
-                <label htmlFor="confirmation-modal">
+                <label htmlFor="confirmation-modal" className={`${role !== "buyer" ? "tooltip tooltip-left" : null}`} data-tip="Please Login as a buyer.">
                   <button
                     className={`btn btn-accent w-full ${isPending ? 'loading': null}`}
                     type="submit"
                     aria-label="Submit"
-                    disabled={isPending}
+                    disabled={isPending || isRoleLoading || role !== "buyer"}
                   >Submit</button>
                 </label>
               </div>

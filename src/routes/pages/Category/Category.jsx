@@ -3,14 +3,16 @@ import toast from "react-hot-toast";
 import { useLoaderData, useLocation, useNavigate } from "react-router-dom";
 import BookingModal from "../../../components/BookingModal/BookingModal";
 import ProductCard from "../../../components/ProductCard/ProductCard";
+import useCheckRole from "../../../hooks/useCheckRole";
 import { UserContext } from './../../../contexts/UserContext/UserContext';
 
 const Category = () => {
   const [buyingProduct, setBuyingProduct] = useState(null);
   const products = useLoaderData();
-  const { user } = useContext(UserContext);
   const navigate = useNavigate();
   const location = useLocation();
+  
+  const { user } = useContext(UserContext);
 
   const closeModal = () => setBuyingProduct(null);
 

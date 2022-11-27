@@ -1,9 +1,7 @@
-import React from 'react';
-
 const ReportedItems = () => {
   return (
-    <div>
-      reported Items
+    <div className='mx-5 my-3'>
+      <h1 className='text-2xl font-semibold mb-5'>Reported Items</h1>
     </div>
   );
 };

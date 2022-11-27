@@ -1,8 +1,30 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { useContext, useState } from "react";
+import toast from "react-hot-toast";
+import { useLocation, useNavigate } from "react-router-dom";
+import BookingModal from "../../../../components/BookingModal/BookingModal";
 import ProductCard from "../../../../components/ProductCard/ProductCard";
+import { UserContext } from "../../../../contexts/UserContext/UserContext";
 
 const HomeAdvertisement = () => {
+  const [buyingProduct, setBuyingProduct] = useState(null);
+
+  const { user } = useContext(UserContext);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const closeModal = () => setBuyingProduct(null);
+
+  const openBookModal = (product) => {
+    if (!user) {
+      toast("Please Login first.")
+      navigate('/login', {state: {from: location}});
+    } else {
+      setBuyingProduct(product);
+    }
+  };
+
   const {
     data: products = [],
     isLoading,
@@ -10,7 +32,7 @@ const HomeAdvertisement = () => {
   } = useQuery({
     queryKey: ["advertised-products"],
     queryFn: async () => {
-      const { data } = await axios.get(`http://localhost:5000/advertisements`);
+      const { data } = await axios.get(`http://localhost:5000/v2/home-advertisements`);
       return data;
     },
   });
@@ -24,9 +46,10 @@ const HomeAdvertisement = () => {
       </h1>
       <div className="grid gap-4 my-4">
         {products.map((pd) => (
-          <ProductCard key={pd._id} productData={pd} />
+          <ProductCard key={pd._id} productData={pd} openBookModal={openBookModal} />
         ))}
       </div>
+      {buyingProduct ? <BookingModal buyingProduct={buyingProduct} closeModal={closeModal} /> : null}
     </section>
   );
 };

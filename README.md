@@ -1,70 +1,61 @@
-# Getting Started with Create React App
+# Secondhand Bazaar - Resale Market | [Live Site](https://secondhand-bazaar.web.app/)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This website is created to sell used (second-hand) Desktop computer parts. This project was created as a part of assignment of **Complete Web Development Bootcamp** by **Programming Hero** with **Jhankar Mahbub**. 
 
-## Available Scripts
+## Project Features
 
-In the project directory, you can run:
+### Categories
+* Users can find items of different categories.
+* Each category page is generated dynamically.
+* Each category page has items associated with that category.
 
-### `yarn start`
+### Buyer
+* User can log in either as a buyer or a seller.
+* If logged in as buyer user can book an item from categories or advertised section.
+* User can pay for the booked item to finalize the deal from my orders page in dashboard
+* Buyers can pay with stripe payment gateway.
+* User can also report an item.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Seller
+* Seller can not buy items and can only sell items.
+* sellers will see Add a item, my items, my buyers page in dashboard.
+* In the add a item page user can upload a item with relevant information.
+* Uploaded items will appear in my items page.
+* User can advertise or remove the item.
+* If someone buys the item it will appear in my buyers page along with buyer information.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Admin
+* Admin can see all sellers and all buyers in All Sellers and All Buyers page in dashboard.
+* Admin can remove a seller or user.
+* Admin can remove a reported item.
 
-### `yarn test`
+### Advertised Items
+* This website has a section for advertised items which are being advertised by sellers.
+* Sellers can add or remove advertising of their items.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Security
+* All dashboard routes are protected.
+* Each type of user can only access relevant routes in dashboard.
+* Firebase authentication and JWT based authorization is used to maintain security.
 
-### `yarn build`
+### Blog
+* In the blog page there are some web development related question and their answers.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Others
+* User is notified of each action with toast.
+* Data from server is cached.
+* Express is used on server and MongoDb is used as database.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### Used npm packages
+* react
+* tanstack/react-query
+* axios
+* firebase
+* react-router-dom
+* tailwindcss
+* daisyui
+* react-hook-form
+* react-hot-toast
+* react-icons
+* stripe/stripe-js
+* stripe/react-stripe-js

@@ -25,7 +25,7 @@ const ReportedItems = () => {
         }
       );
 
-      console.log(data);
+      // console.log(data);
       return data;
     },
   });
@@ -89,7 +89,7 @@ const ReportedItems = () => {
                     <td>{pd.reportedProductId}</td>
                     <td>
                       <img
-                        src={pd.productData[0].image}
+                        src={pd.productData[0]?.image}
                         className="h-10"
                         alt="product_image"
                       />
@@ -97,37 +97,37 @@ const ReportedItems = () => {
                     <td>
                       <div
                         className="tooltip tooltip-right whitespace-normal max-w-[120px] z-10"
-                        data-tip={pd.productData[0].productName}
+                        data-tip={pd.productData[0]?.productName}
                       >
                         <div className="max-w-[120px] text-ellipsis overflow-hidden  whitespace-nowrap">
-                          {pd.productData[0].productName}
+                          {pd.productData[0]?.productName}
                         </div>
                       </div>
                     </td>
-                    <td>{pd.productData[0].askingPrice}</td>
-                    <td>{pd.productData[0].retailPrice}</td>
-                    <td>{pd.productData[0].productCondition}</td>
+                    <td>{pd.productData[0]?.askingPrice}</td>
+                    <td>{pd.productData[0]?.retailPrice}</td>
+                    <td>{pd.productData[0]?.productCondition}</td>
                     {/* <td>{pd.category}</td> */}
                     <td className="">
                       <div
                         className="tooltip tooltip-right max-w-[150px] z-20 whitespace-normal"
-                        data-tip={pd.productData[0].description}
+                        data-tip={pd.productData[0]?.description}
                       >
                         <div className="max-w-[120px] text-ellipsis overflow-hidden whitespace-nowrap">
-                          {pd.productData[0].description}
+                          {pd.productData[0]?.description}
                         </div>
                       </div>
                     </td>
-                    <td>{pd.productData[0].contact}</td>
-                    <td>{pd.productData[0].location}</td>
+                    <td>{pd.productData[0]?.contact}</td>
+                    <td>{pd.productData[0]?.location}</td>
                     <td>
-                      {pd.productData[0].isAdvertised ? "Running" : "None"}
+                      {pd.productData[0]?.isAdvertised ? "Running" : "None"}
                     </td>
                     <td>
                       <label
                         htmlFor="confirmation-modal"
                         className="btn-error py-1 px-3 rounded-sm cursor-pointer hover:bg-red-500"
-                        onClick={() => setDeletingProduct(pd.productData[0])}
+                        onClick={() => setDeletingProduct(pd.reportedProductId)}
                       >
                         Delete
                       </label>
@@ -143,7 +143,7 @@ const ReportedItems = () => {
             message={`Warning! Deleted product can't be recovered`}
             confirmAction={deleteProduct}
             buttonText="Delete"
-            modalData={deletingProduct._id}
+            modalData={deletingProduct}
             closeModal={closeModal}
           />
         ) : null}

@@ -114,7 +114,7 @@ const CheckoutForm = ({
         price: price,
       };
 
-      console.log(payment);
+      // console.log(payment);
 
       fetch("https://secondhand-bazaar-server.vercel.app/save-payment-info", {
         method: "POST",

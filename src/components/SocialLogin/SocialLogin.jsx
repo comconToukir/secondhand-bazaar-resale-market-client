@@ -10,10 +10,6 @@ const SocialLogin = ({ setLoginUserEmail, loading, setLoading }) => {
   const handleGoogleSignIn = () => {
     googleSignIn()
       .then(({ user }) => {
-        setGoogleUser(user.email);
-
-        // console.log({ user });
-
         const userData = {
           name: user.displayName,
           email: user.email,
@@ -29,8 +25,8 @@ const SocialLogin = ({ setLoginUserEmail, loading, setLoading }) => {
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log(data);
-            console.log(googleUser);
+            setGoogleUser(user.email);
+            // setLoginUserEmail(googleUser);
           });
       })
       .then(() => setLoginUserEmail(googleUser))

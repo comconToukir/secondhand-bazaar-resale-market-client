@@ -33,7 +33,7 @@ const AddProduct = () => {
   const onSubmit = (data) => {
     setIsAdding(true);
 
-    console.log(data);
+    // console.log(data);
 
     const image = data.image[0];
     const formData = new FormData();
@@ -47,8 +47,8 @@ const AddProduct = () => {
       .then((res) => res.json())
       .then((imgData) => {
         if (imgData.success) {
-          console.log(imgData);
-          console.log(imgData.data.url);
+          // console.log(imgData);
+          // console.log(imgData.data.url);
 
           data.image = imgData.data.url;
           data.isSold = false;
@@ -75,7 +75,7 @@ const AddProduct = () => {
               toast.error(
                 "Sorry! Something unexpected happened. Please try again."
               );
-              console.log(error);
+              console.error(error);
             });
         }
       });

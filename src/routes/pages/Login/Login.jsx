@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -7,17 +7,17 @@ import { UserContext } from "../../../contexts/UserContext/UserContext";
 import loginBanner from "../../../assets/images/login/login-header.jpg";
 import SocialLogin from "../../../components/SocialLogin/SocialLogin";
 import AuthButton from "../../../components/AuthButton/AuthButton";
-import useGetToken from './../../../hooks/useGetToken';
-import Loading from './../../../components/Loading/Loading';
+import useGetToken from "./../../../hooks/useGetToken";
+import Loading from "./../../../components/Loading/Loading";
 
 const Login = () => {
   const { logInUser, loading, setLoading } = useContext(UserContext);
   const [loginUserEmail, setLoginUserEmail] = useState("");
-  
+
   const location = useLocation();
-  
+
   const from = location.state?.from?.pathname || "/";
-  
+
   const [token, isTokenLoading] = useGetToken(loginUserEmail, from);
 
   const {
@@ -31,9 +31,8 @@ const Login = () => {
     const email = data.email;
     const password = data.password;
 
-    
     logInUser(email, password)
-    .then(({ user }) => {
+      .then(({ user }) => {
         setLoginUserEmail(email);
         setLoading(false);
       })
@@ -42,9 +41,14 @@ const Login = () => {
         console.error(error);
         setLoading(false);
       });
-  }
+  };
 
-  // if (loading) return <Loading />;
+  if (loading)
+    return (
+      <div className="min-h-screen">
+        <Loading />
+      </div>
+    );
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 max-w-screen-xl mx-auto my-12 lg:h-screen">
@@ -69,7 +73,9 @@ const Login = () => {
                 })}
               />
               {errors?.email?.type === "required" && (
-                <p className="text-red-500 text-xs">Email Address is required</p>
+                <p className="text-red-500 text-xs">
+                  Email Address is required
+                </p>
               )}
               <label className="label">
                 <span className="label-text">Password</span>
@@ -86,18 +92,25 @@ const Login = () => {
               {errors?.password?.type === "required" && (
                 <p className="text-red-500 text-xs">Password is required</p>
               )}
-              
-              <AuthButton loading={loading} className={`mt-5 mx-auto`}>Login</AuthButton>
+
+              <AuthButton loading={loading} className={`mt-5 mx-auto`}>
+                Login
+              </AuthButton>
             </div>
           </form>
           <p className="mt-8 text-center text-sm">
-                Don't have an account?{" "}
-                <Link className="link ml-1 hover:font-medium" to="/register">
-                  Register
-                </Link>
-              </p>
+            Don't have an account?{" "}
+            <Link className="link ml-1 hover:font-medium" to="/register">
+              Register
+            </Link>
+          </p>
           <div className="divider my-10">Or Login With</div>
-          <SocialLogin from={from} setLoginUserEmail={setLoginUserEmail} loading={loading} setLoading={setLoading} />
+          <SocialLogin
+            from={from}
+            setLoginUserEmail={setLoginUserEmail}
+            loading={loading}
+            setLoading={setLoading}
+          />
         </div>
       </div>
     </div>

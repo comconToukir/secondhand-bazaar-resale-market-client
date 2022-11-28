@@ -60,7 +60,7 @@ const AllSellers = () => {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         refetch();
         if (data.deletedCount > 0) {
           toast.success("The seller has been removed successfully.");

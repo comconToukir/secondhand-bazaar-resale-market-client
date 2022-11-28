@@ -40,7 +40,7 @@ const MyBuyers = () => {
 
   if (buyers.length === 0)
     return (
-      <div className="m-4 text-2xl">Your products haven't been sold yet.</div>
+      <div className="m-4 text-lg">Your products haven't been sold yet.</div>
     );
 
   return (

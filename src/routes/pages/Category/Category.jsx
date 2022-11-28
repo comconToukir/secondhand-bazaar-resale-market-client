@@ -33,7 +33,7 @@ const Category = () => {
     }
   };
 
-  if (navigation.state === "loading") return <Loading />;
+  if (navigation.state === "loading") return <div className="min-h-screen"><Loading /></div>;
 
   return (
     <div className="px-4 my-4 min-h-screen max-w-screen-xl mx-auto">

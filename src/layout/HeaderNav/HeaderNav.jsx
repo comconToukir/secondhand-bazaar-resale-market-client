@@ -115,7 +115,7 @@ const HeaderNav = ({ dashboard }) => {
             <>
               <button
                 onClick={logOutUser}
-                className="outline outline-1 outline-gray-600 font-semibold py-1 w-min px-4 rounded-sm cursor-pointer hover:bg-gray-300 hover:text-gray-800"
+                className="outline outline-1 outline-gray-600 font-semibold py-1 w-min px-4 rounded-sm cursor-pointer hover:bg-gray-300 hover:text-gray-800 tracking-widest"
               >
                 Logout
               </button>

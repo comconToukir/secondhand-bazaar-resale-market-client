@@ -3,17 +3,22 @@ import { useForm } from "react-hook-form";
 import loginBanner from "../../../assets/images/login/login-header.jpg";
 import SocialLogin from "../../../components/SocialLogin/SocialLogin";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../../../contexts/UserContext/UserContext";
 import toast from "react-hot-toast";
 import AuthButton from "../../../components/AuthButton/AuthButton";
+import useGetToken from "../../../hooks/useGetToken";
 
 const Register = () => {
-  const { createUser, updateUser, loading } = useContext(UserContext);
-  const navigate = useNavigate();
+  const { createUser, updateUser, loading, setLoading } =
+    useContext(UserContext);
+  const [loginUserEmail, setLoginUserEmail] = useState("");
+
   const location = useLocation();
 
   const from = location.state?.from?.pathname || "/";
+
+  const [token, isTokenLoading] = useGetToken(loginUserEmail, from);
 
   const {
     register,
@@ -50,11 +55,13 @@ const Register = () => {
           .then((data) => {
             console.log(data);
             if (data.acknowledged) {
-              navigate(from);
+              setLoginUserEmail(email);
+              setLoading(false);
             }
           });
       })
       .catch((error) => {
+        setLoading(false);
         toast.error(error.code);
         console.error(error);
       });
@@ -133,7 +140,9 @@ const Register = () => {
               {errors?.role?.type === "required" && (
                 <p className="text-red-500 text-xs">User Type is required</p>
               )}
-              <AuthButton loading={loading} className="mt-5 mx-auto">Register</AuthButton>
+              <AuthButton loading={loading} className="mt-5 mx-auto">
+                Register
+              </AuthButton>
             </div>
           </form>
           <p className="mt-8 text-center text-sm">
@@ -143,7 +152,7 @@ const Register = () => {
             </Link>
           </p>
           <div className="divider my-10 text-sm">Or Register As User With</div>
-          <SocialLogin from={from} />
+          <SocialLogin from={from}  setLoginUserEmail={setLoginUserEmail} loading={loading} setLoading={setLoading}  />
         </div>
       </div>
     </div>

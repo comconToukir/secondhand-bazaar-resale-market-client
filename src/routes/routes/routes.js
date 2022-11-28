@@ -19,6 +19,8 @@ import MyBuyers from "../pages/Dashboard/MyBuyers/MyBuyers";
 import ReportedItems from './../pages/Dashboard/ReportedItems/ReportedItems';
 import Advertisements from "../pages/Advertisements/Advertisements";
 import Dashboard from "../pages/Dashboard/Dashboard";
+import PrivateRoute from "./PrivateRoute/PrivateRoute";
+import SellerRoute from "./SellerRoute/SellerRoute";
 
 const router = createBrowserRouter([
   {
@@ -61,7 +63,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    element: <DashboardLayout />,
+    element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
     errorElement: <ErrorPage />,
     children: [
       {
@@ -70,15 +72,15 @@ const router = createBrowserRouter([
       },
       {
         path: 'add-product',
-        element: <AddProduct />,
+        element: <SellerRoute><AddProduct /></SellerRoute>,
       },
       {
         path: 'my-products',
-        element: <MyProducts />,
+        element: <SellerRoute><MyProducts /></SellerRoute>,
       },
       {
         path: 'my-buyers',
-        element: <MyBuyers />,
+        element: <SellerRoute><MyBuyers /></SellerRoute>,
       },
       {
         path: 'my-orders',

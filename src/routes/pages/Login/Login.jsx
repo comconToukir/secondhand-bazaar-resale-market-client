@@ -1,21 +1,24 @@
+import { useContext, useState } from 'react';
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
+import { UserContext } from "../../../contexts/UserContext/UserContext";
 import loginBanner from "../../../assets/images/login/login-header.jpg";
 import SocialLogin from "../../../components/SocialLogin/SocialLogin";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useContext } from 'react';
-import { UserContext } from "../../../contexts/UserContext/UserContext";
-import toast from "react-hot-toast";
 import AuthButton from "../../../components/AuthButton/AuthButton";
+import useGetToken from './../../../hooks/useGetToken';
+import Loading from './../../../components/Loading/Loading';
 
 const Login = () => {
   const { logInUser, loading, setLoading } = useContext(UserContext);
-  const navigate = useNavigate();
+  const [loginUserEmail, setLoginUserEmail] = useState("");
+  
   const location = useLocation();
-
+  
   const from = location.state?.from?.pathname || "/";
-
-  // console.log(location)
+  
+  const [token, isTokenLoading] = useGetToken(loginUserEmail, from);
 
   const {
     register,
@@ -28,16 +31,20 @@ const Login = () => {
     const email = data.email;
     const password = data.password;
 
+    
     logInUser(email, password)
-      .then((result) => {
-        navigate(from);
+    .then(({ user }) => {
+        setLoginUserEmail(email);
+        setLoading(false);
       })
       .catch((error) => {
         toast.error(error.code);
         console.error(error);
-        setLoading(false)
+        setLoading(false);
       });
   }
+
+  // if (loading) return <Loading />;
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 max-w-screen-xl mx-auto my-12 lg:h-screen">
@@ -90,7 +97,7 @@ const Login = () => {
                 </Link>
               </p>
           <div className="divider my-10">Or Login With</div>
-          <SocialLogin from={from} />
+          <SocialLogin from={from} setLoginUserEmail={setLoginUserEmail} loading={loading} setLoading={setLoading} />
         </div>
       </div>
     </div>

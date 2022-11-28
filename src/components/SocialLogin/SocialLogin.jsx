@@ -1,23 +1,24 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { FaGoogle } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext/UserContext";
 
-const SocialLogin = ({ from }) => {
+const SocialLogin = ({ setLoginUserEmail, loading, setLoading }) => {
+  const [googleUser, setGoogleUser] = useState("");
   const { googleSignIn } = useContext(UserContext);
-  const navigate = useNavigate();
 
   const handleGoogleSignIn = () => {
     googleSignIn()
       .then(({ user }) => {
-        console.log( user );
+        setGoogleUser(user.email);
+
+        // console.log({ user });
 
         const userData = {
           name: user.displayName,
           email: user.email,
-          role: "buyer"
-        }
+          role: "buyer",
+        };
 
         fetch("http://localhost:5000/user", {
           method: "PUT",
@@ -29,12 +30,12 @@ const SocialLogin = ({ from }) => {
           .then((res) => res.json())
           .then((data) => {
             console.log(data);
-            if (data.acknowledged) {
-              navigate(from);
-            }
+            console.log(googleUser);
           });
       })
+      .then(() => setLoginUserEmail(googleUser))
       .catch((error) => {
+        setLoading(false);
         console.error(error);
         toast.error(error.code);
       });
@@ -42,10 +43,15 @@ const SocialLogin = ({ from }) => {
 
   return (
     <div>
-      <button onClick={handleGoogleSignIn} className="flex items-center gap-2 mx-auto outline outline-1  outline-gray-800 text-gray-800 font-semibold hover:bg-gray-800 hover:text-white px-4 py-1 rounded-md">
-          <FaGoogle />
-          Google
-        </button>
+      <button
+        onClick={handleGoogleSignIn}
+        className={`flex items-center gap-2 mx-auto outline outline-1  outline-gray-800 text-gray-800 font-semibold hover:bg-gray-800 hover:text-white px-4 py-1 rounded-md ${
+          loading ? "disabled loading" : null
+        }`}
+      >
+        <FaGoogle />
+        Google
+      </button>
     </div>
   );
 };

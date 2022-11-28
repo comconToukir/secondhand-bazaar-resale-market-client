@@ -60,8 +60,6 @@ const Register = () => {
       });
   };
 
-  if (loading) return "loading";
-
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-screen-xl my-12 lg:my-0 lg:h-screen mx-auto">
       <div className="grid place-items-center">
@@ -135,7 +133,7 @@ const Register = () => {
               {errors?.role?.type === "required" && (
                 <p className="text-red-500 text-xs">User Type is required</p>
               )}
-              <AuthButton className="mt-5 mx-auto">Register</AuthButton>
+              <AuthButton loading={loading} className="mt-5 mx-auto">Register</AuthButton>
             </div>
           </form>
           <p className="mt-8 text-center text-sm">

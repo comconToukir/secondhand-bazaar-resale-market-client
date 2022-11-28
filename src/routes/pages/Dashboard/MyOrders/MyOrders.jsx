@@ -3,6 +3,7 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import Loading from "../../../../components/Loading/Loading";
 import { UserContext } from "../../../../contexts/UserContext/UserContext";
 import ConfirmationModal from "./../../../../components/ConfirmationModal/ConfirmationModal";
 
@@ -24,14 +25,15 @@ const MyOrders = () => {
       );
 
       console.log(data);
-      const filteredByBoughtBy = data.filter(
-        (dt) => dt.boughtBy === user.email || !dt.boughtBy
-      );
-      return filteredByBoughtBy;
+      // const filteredByBoughtBy = data.filter(
+      //   (dt) => dt.boughtBy === user.email || !dt.boughtBy
+      // );
+      // return filteredByBoughtBy;
+      return data;
     },
   });
 
-  if (isLoading) return "loading";
+  if (isLoading) return <Loading />;
 
   const closeModal = () => setDeletingProduct(null);
 
@@ -52,8 +54,12 @@ const MyOrders = () => {
   };
 
   return (
-    <div className="px-5">
-      <h1 className="text-2xl font-semibold mt-3 mb-5">My Bookings</h1>
+    <div className="m-4">
+      <h1 className="border-b-2 mb-4 border-gray-800 flex justify-between  font-medium">
+        <span className="px-4 py-1 bg-gray-800 text-2xl text-white">
+          My Orders
+        </span>
+      </h1>
       <div className="overflow-x-auto">
         <table className="table table-compact w-full">
           <thead>
@@ -94,9 +100,9 @@ const MyOrders = () => {
                     <td>{od.sellerEmail}</td>
                     <td>{od.sellerContact}</td>
                     <td>
-                      {od.isPaid ? (
+                      {od?.boughtBy === user.email ? (
                         <span className="text-green-600">Paid</span>
-                      ) : od.sellerRemoved ? (
+                      ) : od.sellerRemoved || od.isPaid  ? (
                         <span className="text-gray-400">Unavailable</span>
                       ) : (
                         <Link

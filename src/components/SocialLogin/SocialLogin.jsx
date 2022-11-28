@@ -42,7 +42,7 @@ const SocialLogin = ({ from }) => {
 
   return (
     <div>
-      <button onClick={handleGoogleSignIn} className="flex items-center gap-2 mx-auto outline outline-1  outline-gray-600 px-4 py-1 rounded-md">
+      <button onClick={handleGoogleSignIn} className="flex items-center gap-2 mx-auto outline outline-1  outline-gray-800 text-gray-800 font-semibold hover:bg-gray-800 hover:text-white px-4 py-1 rounded-md">
           <FaGoogle />
           Google
         </button>

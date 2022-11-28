@@ -5,6 +5,7 @@ import ProductCard from "../../../components/ProductCard/ProductCard";
 import { UserContext } from "../../../contexts/UserContext/UserContext";
 import { useLocation } from "react-router-dom";
 import toast from "react-hot-toast";
+import Loading from "../../../components/Loading/Loading";
 
 const Advertisements = () => {
   const [buyingProduct, setBuyingProduct] = useState(null);
@@ -27,11 +28,15 @@ const Advertisements = () => {
     }
   };
 
-  if (navigation.state === "loading") return "loading";
+  if (navigation.state === "loading") return <Loading />;
 
   return (
-    <div className="mx-5 my-3">
-      <h1 className="text-2xl font-medium">Advertised Products</h1>
+    <div className="px-4 my-8 max-w-screen-xl mx-auto">
+      <h1 className="border-b-2 border-gray-800 flex justify-between  font-medium">
+        <span className="px-4 py-1 bg-gray-800 text-2xl text-white">
+          Advertised Products
+        </span>
+      </h1>
       <div className="grid gap-4 my-4">
         {advertisements.map((pd) => (
           <ProductCard

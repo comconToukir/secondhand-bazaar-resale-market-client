@@ -3,6 +3,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import Loading from "../../../../components/Loading/Loading";
 import CheckoutForm from "./CheckoutForm";
 
 const stripePromise = loadStripe(process.env.REACT_APP_stripe_pk);
@@ -23,7 +24,7 @@ const PaymentPage = () => {
     },
   });
 
-  if (isLoading) return "loading";
+  if (isLoading) return <Loading />;
 
   const { productName, image, price, productId, _id } = booking;
 

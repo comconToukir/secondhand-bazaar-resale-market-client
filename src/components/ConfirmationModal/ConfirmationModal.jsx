@@ -11,7 +11,7 @@ const ConfirmationModal = ({
   return (
     <div>
       <input type="checkbox" id="confirmation-modal" className="modal-toggle" />
-      <div className="modal">
+      <div className="modal z-[9999]">
         <div className="modal-box w-80">
           <h3 className="font-bold text-lg">{modalTitle}</h3>
           <p className="py-4">{message}</p>

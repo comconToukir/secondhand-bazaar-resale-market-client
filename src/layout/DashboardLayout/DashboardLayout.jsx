@@ -4,6 +4,7 @@ import HeaderNav from "../HeaderNav/HeaderNav";
 import Footer from "./../Footer/Footer";
 import useCheckRole from "./../../hooks/useCheckRole";
 import { UserContext } from "../../contexts/UserContext/UserContext";
+import Loading from "../../components/Loading/Loading";
 
 const DashboardLayout = () => {
   const { user } = useContext(UserContext);
@@ -12,43 +13,43 @@ const DashboardLayout = () => {
 
   // console.log(role, isRoleLoading);
 
-  if (isRoleLoading) return "loading";
+  if (isRoleLoading) return <Loading />;
 
   const dashboardRoutes = (
     <>
       {role === "buyer" ? (
         <>
           <li>
-            <NavLink to="/dashboard/my-orders">My Orders</NavLink>
+            <NavLink to="/dashboard/my-orders" className="font-medium">My Orders</NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/wishlist">My Wishlist</NavLink>
+            <NavLink to="/dashboard/wishlist" className="font-medium">My Wishlist</NavLink>
           </li>
         </>
       ) : null}
       {role === "seller" ? (
         <>
           <li>
-            <NavLink to="/dashboard/add-product">Add a Product</NavLink>
+            <NavLink to="/dashboard/add-product" className="font-medium">Add a Product</NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/my-products">My Products</NavLink>
+            <NavLink to="/dashboard/my-products" className="font-medium">My Products</NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/my-buyers">My Buyers</NavLink>
+            <NavLink to="/dashboard/my-buyers" className="font-medium">My Buyers</NavLink>
           </li>
         </>
       ) : null}
       {role === "admin" ? (
         <>
           <li>
-            <NavLink to="/dashboard/all-sellers">All Sellers</NavLink>
+            <NavLink to="/dashboard/all-sellers" className="font-medium">All Sellers</NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/all-buyers">All Buyers</NavLink>
+            <NavLink to="/dashboard/all-buyers" className="font-medium">All Buyers</NavLink>
           </li>
           <li>
-            <NavLink to="/dashboard/reported-items">Reported Items</NavLink>
+            <NavLink to="/dashboard/reported-items" className="font-medium">Reported Items</NavLink>
           </li>
         </>
       ) : null}
@@ -72,7 +73,7 @@ const DashboardLayout = () => {
         </div>
         <div className="drawer-side">
           <label htmlFor="dashboard-toggle" className="drawer-overlay"></label>
-          <ul className="menu overflow-y-auto w-80 bg-base-200 text-base-content  z-20 h-full min-h-screen">
+          <ul className="menu overflow-y-auto w-80 bg-gray-200 text-base-content  z-20 h-full min-h-screen">
             {dashboardRoutes}
           </ul>
         </div>

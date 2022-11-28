@@ -40,7 +40,7 @@ const HomeAdvertisement = () => {
   if (!products.length) return null;
 
   return (
-    <section className="mt-40 px-3">
+    <section className="my-64 px-3">
       <h1 className="border-b-2 border-gray-800 flex justify-between">
         <span className="px-4 py-1 bg-gray-800 text-lg text-white">Advertised Products</span>
         <Link to="/advertisements" className="px-4 py-1 bg-gray-600 text-lg text-white">See All</Link>

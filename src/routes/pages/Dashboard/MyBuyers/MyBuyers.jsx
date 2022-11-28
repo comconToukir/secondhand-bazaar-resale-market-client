@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useContext } from "react";
+import Loading from "../../../../components/Loading/Loading";
 import { UserContext } from "../../../../contexts/UserContext/UserContext";
 
 const MyBuyers = () => {
@@ -26,13 +27,17 @@ const MyBuyers = () => {
     },
   });
 
-  if (isLoading) return "loading";
+  if (isLoading) return <Loading />;
 
-  if (buyers.length === 0) return <div className="mx-5 my-3 text-xl">Your products haven't been sold yet.</div>
+  if (buyers.length === 0) return <div className="m-4 text-2xl">Your products haven't been sold yet.</div>
 
   return (
-    <div className="px-5">
-      <h1 className="text-2xl font-semibold mt-3 mb-5">My products</h1>
+    <div className="m-4">
+      <h1 className="border-b-2 mb-4 border-gray-800 flex justify-between  font-medium">
+        <span className="px-4 py-1 bg-gray-800 text-2xl text-white">
+          My Buyers
+        </span>
+      </h1>
       <div className="overflow-x-auto">
         <table className="table table-compact w-full">
           <thead>

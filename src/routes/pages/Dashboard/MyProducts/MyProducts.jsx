@@ -3,6 +3,7 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import ConfirmationModal from "../../../../components/ConfirmationModal/ConfirmationModal";
+import Loading from "../../../../components/Loading/Loading";
 import { UserContext } from "../../../../contexts/UserContext/UserContext";
 
 const MyProducts = () => {
@@ -55,15 +56,19 @@ const MyProducts = () => {
       });
   };
 
-  if (isLoading) return "loading";
+  if (isLoading) return <Loading />;
 
   if (products.length === 0) return <div className="mx-5 my-3 text-xl">Your have not yet added any product.</div>
 
   //TODO: Confirmation modal, Remove advertisement
 
   return (
-    <div className="px-5">
-      <h1 className="text-2xl font-semibold mt-3 mb-5">My products</h1>
+    <div className="m-4">
+      <h1 className="border-b-2 mb-4 border-gray-800 flex justify-between  font-medium">
+        <span className="px-4 py-1 bg-gray-800 text-2xl text-white">
+          My Products
+        </span>
+      </h1>
       <div className="overflow-x-auto">
         <table className="table table-compact w-full">
           <thead>
@@ -97,10 +102,10 @@ const MyProducts = () => {
                     </td>
                     <td>
                       <div
-                        className="tooltip tooltip-right max-w-[150px]"
+                        className="tooltip tooltip-right whitespace-normal max-w-[120px] z-10"
                         data-tip={pd.productName}
                       >
-                        <div className="max-w-[120px] text-ellipsis overflow-hidden">
+                        <div className="max-w-[120px] text-ellipsis overflow-hidden  whitespace-nowrap">
                           {pd.productName}
                         </div>
                       </div>
@@ -109,12 +114,12 @@ const MyProducts = () => {
                     <td>{pd.retailPrice}</td>
                     <td>{pd.productCondition}</td>
                     {/* <td>{pd.category}</td> */}
-                    <td>
+                    <td className="">
                       <div
-                        className="tooltip tooltip-right max-w-[150px]"
+                        className="tooltip tooltip-right max-w-[150px] z-20 whitespace-normal"
                         data-tip={pd.description}
                       >
-                        <div className="max-w-[120px] text-ellipsis overflow-hidden">
+                        <div className="max-w-[120px] text-ellipsis overflow-hidden whitespace-nowrap">
                           {pd.description}
                         </div>
                       </div>

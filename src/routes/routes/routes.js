@@ -18,6 +18,7 @@ import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import MyBuyers from "../pages/Dashboard/MyBuyers/MyBuyers";
 import ReportedItems from './../pages/Dashboard/ReportedItems/ReportedItems';
 import Advertisements from "../pages/Advertisements/Advertisements";
+import Dashboard from "../pages/Dashboard/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -45,6 +46,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'blog',
+        loader: () => fetch('http://localhost:5000/blogs'),
         element: <Blog />
       },
       {
@@ -62,6 +64,10 @@ const router = createBrowserRouter([
     element: <DashboardLayout />,
     errorElement: <ErrorPage />,
     children: [
+      {
+        path: '',
+        element: <Dashboard />,
+      },
       {
         path: 'add-product',
         element: <AddProduct />,

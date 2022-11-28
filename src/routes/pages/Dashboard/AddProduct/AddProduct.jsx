@@ -78,10 +78,12 @@ const AddProduct = () => {
 
   return (
     <div>
-      <div className="">
-        <h1 className="text-3xl font-semibold my-5 text-center">
+      <div className=" m-4">
+      <h1 className="border-b-2 border-gray-800 flex justify-between  font-medium">
+        <span className="px-4 py-1 bg-gray-800 text-2xl text-white">
           Add Your Product
-        </h1>
+        </span>
+      </h1>
         <form className="" onSubmit={handleSubmit(onSubmit)}>
           <div className="form-control max-w-lg mx-auto px-8">
             <label className="label">
@@ -201,13 +203,13 @@ const AddProduct = () => {
               type="number"
               placeholder="YYYY"
               className="input input-bordered w-full h-9 rounded-sm placeholder:text-sm placeholder:text-gray-500"
-              aria-invalid={errors.retailPrice ? "true" : "false"}
-              {...register("retailPrice", {
+              aria-invalid={errors.purchaseYear ? "true" : "false"}
+              {...register("purchaseYear", {
                 required: true,
               })}
             />
-            {errors?.retailPrice?.type === "required" && (
-              <p className="text-red-500 text-xs">Retail Price is required</p>
+            {errors?.purchaseYear?.type === "required" && (
+              <p className="text-red-500 text-xs">Purchase year is required</p>
             )}
 
             <label className="label">
@@ -219,13 +221,13 @@ const AddProduct = () => {
               className="input input-bordered w-full h-24 py-2 rounded-sm placeholder:text-sm placeholder:text-gray-500"
               aria-invalid={errors.description ? "true" : "false"}
               {...register("description", {
-                maxLength: 300,
+                maxLength: 500,
                 // required: true,
               })}
             />
             {errors?.description?.type === "maxLength" && (
               <p className="text-red-500 text-xs">
-                Description must be less than 300 characters
+                Description must be less than 500 characters
               </p>
             )}
 

@@ -8,56 +8,67 @@ const AllSellers = () => {
   const [deletingSeller, setDeletingSeller] = useState(null);
   const [verifyingSeller, setVerifyingSeller] = useState(null);
 
-  const { data: allSellers = [], refetch, isLoading } = useQuery({
+  const {
+    data: allSellers = [],
+    refetch,
+    isLoading,
+  } = useQuery({
     queryKey: ["all-sellers"],
     queryFn: () =>
-      fetch(`http://localhost:5000/all-sellers`).then((res) => res.json()),
+      fetch(`http://localhost:5000/all-sellers`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }).then((res) => res.json()),
   });
 
   const closeModal = () => setDeletingSeller(null);
   const closeVrfModal = () => setVerifyingSeller(null);
 
   const verifySeller = (id) => {
-    fetch('http://localhost:5000/verify-seller', {
-      method: 'PUT',
+    fetch("http://localhost:5000/verify-seller", {
+      method: "PUT",
       headers: {
-        'content-type': 'application/json'
+        "content-type": "application/json",
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
-      body: JSON.stringify({ sellerId: id })
+      body: JSON.stringify({ sellerId: id }),
     })
-    .then(res => res.json())
-    .then(data => {
-      
-      refetch();
-      if (data.modifiedCount > 0) {
-        toast.success("The seller has been verified successfully.")
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      toast.error("An error occurred. Please check browser console.")
-    })
+      .then((res) => res.json())
+      .then((data) => {
+        refetch();
+        if (data.modifiedCount > 0) {
+          toast.success("The seller has been verified successfully.");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        toast.error("An error occurred. Please check browser console.");
+      });
   };
 
   const removeSeller = (email) => {
     fetch(`http://localhost:5000/remove-seller?email=${email}`, {
-      method: 'DELETE'
+      method: "DELETE",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
     })
-    .then(res => res.json())
-    .then(data => {
-      console.log(data)
-      refetch();
-      if (data.deletedCount > 0) {
-        toast.success("The seller has been removed successfully.")
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      toast.error("An error occurred. Please check browser console.")
-    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        refetch();
+        if (data.deletedCount > 0) {
+          toast.success("The seller has been removed successfully.");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        toast.error("An error occurred. Please check browser console.");
+      });
   };
 
-  console.log(verifyingSeller);
+  // console.log(verifyingSeller);
 
   if (isLoading) return <Loading />;
 

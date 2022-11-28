@@ -22,7 +22,12 @@ const MyProducts = () => {
     queryKey: ["my-products"],
     queryFn: async () => {
       const { data } = await axios.get(
-        `http://localhost:5000/all-products/${user.email}`
+        `http://localhost:5000/all-products/${user.email}`,
+        {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
       );
       return data;
     },
@@ -31,6 +36,9 @@ const MyProducts = () => {
   const addAdvertise = (id) => {
     fetch(`http://localhost:5000/advertise/${id}`, {
       method: "PUT",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
     })
       .then((res) => res.json())
       .then((data) => {
@@ -45,6 +53,9 @@ const MyProducts = () => {
   const deleteProduct = (id) => {
     fetch(`http://localhost:5000/delete-product/${id}`, {
       method: "DELETE",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
     })
       .then((res) => res.json())
       .then(() => {
@@ -58,7 +69,12 @@ const MyProducts = () => {
 
   if (isLoading) return <Loading />;
 
-  if (products.length === 0) return <div className="mx-5 my-3 text-xl">Your have not yet added any product.</div>
+  if (products.length === 0)
+    return (
+      <div className="mx-5 my-3 text-xl">
+        Your have not yet added any product or your products have been already bought. Please check My Buyers page.
+      </div>
+    );
 
   //TODO: Confirmation modal, Remove advertisement
 

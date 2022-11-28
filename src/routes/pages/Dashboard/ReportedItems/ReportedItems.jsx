@@ -16,7 +16,11 @@ const ReportedItems = () => {
     queryKey: ["reported-products"],
     queryFn: async () => {
       const { data } = await axios.get(
-        `http://localhost:5000/reported-product/`
+        `http://localhost:5000/reported-product/`, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("accessToken")}`
+          },
+        }
       );
 
       console.log(data);
@@ -29,6 +33,9 @@ const ReportedItems = () => {
   const deleteProduct = (id) => {
     fetch(`http://localhost:5000/delete-product/${id}`, {
       method: "DELETE",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`
+      },
     })
       .then((res) => res.json())
       .then(() => {

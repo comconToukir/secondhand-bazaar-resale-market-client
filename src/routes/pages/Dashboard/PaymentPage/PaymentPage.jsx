@@ -18,7 +18,11 @@ const PaymentPage = () => {
     queryKey: ["booking"],
     queryFn: async () => {
       const { data } = await axios.get(
-        `http://localhost:5000/payment-booking/${id}`
+        `http://localhost:5000/payment-booking/${id}`, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("accessToken")}`
+          },
+        }
       );
       return data;
     },

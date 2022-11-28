@@ -15,7 +15,12 @@ const MyBuyers = () => {
     queryKey: ["my-buyers"],
     queryFn: async () => {
       const { data } = await axios.get(
-        `http://localhost:5000/sold-products?email=${user.email}`
+        `http://localhost:5000/sold-products?email=${user.email}`, {
+          method: 'GET',
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("accessToken")}`
+          },
+        }
       );
 
       data.forEach(dt => {

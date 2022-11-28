@@ -47,7 +47,8 @@ const BookingModal = ({
     fetch('http://localhost:5000/book-product', {
       method: 'PUT',
       headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`
       },
       body: JSON.stringify(data)
     })

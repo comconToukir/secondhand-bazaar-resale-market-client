@@ -21,7 +21,11 @@ const MyOrders = () => {
     queryKey: ["my-orders"],
     queryFn: async () => {
       const { data } = await axios.get(
-        `http://localhost:5000/book-product?email=${user.email}`
+        `http://localhost:5000/book-product?email=${user.email}`, {
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("accessToken")}`
+          },
+        }
       );
 
       console.log(data);
@@ -40,6 +44,9 @@ const MyOrders = () => {
   const deleteProduct = (id) => {
     fetch(`http://localhost:5000/book-product?email=${user.email}&id=${id}`, {
       method: "DELETE",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`
+      },
     })
       .then((res) => res.json())
       .then((data) => {

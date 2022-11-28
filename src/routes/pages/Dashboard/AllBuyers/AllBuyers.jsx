@@ -18,7 +18,11 @@ const AllBuyers = () => {
   } = useQuery({
     queryKey: ["all-buyers"],
     queryFn: async () => {
-      const { data } = await axios.get(`http://localhost:5000/all-buyers`);
+      const { data } = await axios.get(`http://localhost:5000/all-buyers`, {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        },
+      });
 
       return data;
     },
@@ -27,6 +31,9 @@ const AllBuyers = () => {
   const removeBuyer = (id) => {
     fetch(`http://localhost:5000/remove-buyer?id=${id}`, {
       method: "DELETE",
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`
+      },
     })
       .then((res) => res.json())
       .then((data) => {

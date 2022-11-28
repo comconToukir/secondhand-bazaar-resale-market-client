@@ -11,7 +11,7 @@ const HeaderNav = ({ dashboard }) => {
   const { data: categories = [], isLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: () =>
-      fetch(`http://localhost:5000/get-categories`).then((res) => res.json()),
+      fetch(`https://secondhand-bazaar-server.vercel.app/get-categories`).then((res) => res.json()),
   });
 
   const NavLinks = (
@@ -22,7 +22,7 @@ const HeaderNav = ({ dashboard }) => {
         </Link>
       </li>
       <li tabIndex={0}>
-        <button className="justify-between gap-1 font-medium py-3  hover:bg-gray-200 hover:text-gray-800">
+        <button className="justify-between gap-1 font-medium py-3 tracking-widest hover:bg-gray-200 hover:text-gray-800">
           Categories
           <svg
             className="fill-current"
@@ -66,7 +66,7 @@ const HeaderNav = ({ dashboard }) => {
   );
 
   return (
-    <div className="bg-gray-800 text-gray-300">
+    <div className="bg-gray-800 text-gray-300 font-barlow-cond tracking-widest">
       <div
         className={`navbar mx-auto ${!dashboard ? "max-w-screen-xl" : null}`}
       >
@@ -90,7 +90,7 @@ const HeaderNav = ({ dashboard }) => {
             </label>
             <ul
               tabIndex={0}
-              className="menu menu-compact dropdown-content mt-3 shadow bg-gray-800 rounded-box w-52"
+              className="menu menu-compact dropdown-content mt-3 shadow bg-gray-800 text-lg rounded-box w-52"
             >
               {NavLinks}
             </ul>
@@ -108,7 +108,7 @@ const HeaderNav = ({ dashboard }) => {
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal p-0 bg-gray-800">{NavLinks}</ul>
+          <ul className="menu menu-horizontal p-0 bg-gray-800 text-lg">{NavLinks}</ul>
         </div>
         <div className="navbar-end basis-12 lg:basis-auto flex-grow-0">
           {user ? (

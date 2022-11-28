@@ -73,7 +73,7 @@ const DashboardLayout = () => {
         </div>
         <div className="drawer-side">
           <label htmlFor="dashboard-toggle" className="drawer-overlay"></label>
-          <ul className="menu overflow-y-auto w-80 bg-gray-200 text-base-content  z-20 h-full min-h-screen">
+          <ul className="menu overflow-y-auto w-80 bg-gray-200 text-base-content text-lg font-barlow-cond tracking-widest z-20 h-full min-h-screen">
             {dashboardRoutes}
           </ul>
         </div>

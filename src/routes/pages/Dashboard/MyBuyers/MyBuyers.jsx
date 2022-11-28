@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import React, { useContext } from "react";
 import Loading from "../../../../components/Loading/Loading";
+import SectionHeader from "../../../../components/SectionHeader/SectionHeader";
 import { UserContext } from "../../../../contexts/UserContext/UserContext";
 
 const MyBuyers = () => {
@@ -15,16 +16,19 @@ const MyBuyers = () => {
     queryKey: ["my-buyers"],
     queryFn: async () => {
       const { data } = await axios.get(
-        `http://localhost:5000/sold-products?email=${user.email}`, {
-          method: 'GET',
+        `https://secondhand-bazaar-server.vercel.app/sold-products?email=${user.email}`,
+        {
+          method: "GET",
           headers: {
-            authorization: `Bearer ${localStorage.getItem("accessToken")}`
+            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
         }
       );
 
-      data.forEach(dt => {
-        const buyerInfo = dt.bookers.filter(brs => brs.bookerEMail !== dt?.boughtBy);
+      data.forEach((dt) => {
+        const buyerInfo = dt.bookers.filter(
+          (brs) => brs.bookerEMail !== dt?.boughtBy
+        );
         dt.boughtBy = buyerInfo[0];
       });
 
@@ -34,15 +38,18 @@ const MyBuyers = () => {
 
   if (isLoading) return <Loading />;
 
-  if (buyers.length === 0) return <div className="m-4 text-2xl">Your products haven't been sold yet.</div>
+  if (buyers.length === 0)
+    return (
+      <div className="m-4 text-2xl">Your products haven't been sold yet.</div>
+    );
 
   return (
     <div className="m-4">
-      <h1 className="border-b-2 mb-4 border-gray-800 flex justify-between  font-medium">
+      <SectionHeader>
         <span className="px-4 py-1 bg-gray-800 text-2xl text-white">
           My Buyers
         </span>
-      </h1>
+      </SectionHeader>
       <div className="overflow-x-auto">
         <table className="table table-compact w-full">
           <thead>

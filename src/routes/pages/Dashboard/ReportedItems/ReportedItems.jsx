@@ -4,6 +4,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import ConfirmationModal from "../../../../components/ConfirmationModal/ConfirmationModal";
 import Loading from "../../../../components/Loading/Loading";
+import SectionHeader from "../../../../components/SectionHeader/SectionHeader";
 
 const ReportedItems = () => {
   const [deletingProduct, setDeletingProduct] = useState(null);
@@ -16,9 +17,10 @@ const ReportedItems = () => {
     queryKey: ["reported-products"],
     queryFn: async () => {
       const { data } = await axios.get(
-        `http://localhost:5000/reported-product/`, {
+        `https://secondhand-bazaar-server.vercel.app/reported-product/`,
+        {
           headers: {
-            authorization: `Bearer ${localStorage.getItem("accessToken")}`
+            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
         }
       );
@@ -31,10 +33,10 @@ const ReportedItems = () => {
   const closeModal = () => setDeletingProduct(null);
 
   const deleteProduct = (id) => {
-    fetch(`http://localhost:5000/delete-product/${id}`, {
+    fetch(`https://secondhand-bazaar-server.vercel.app/delete-product/${id}`, {
       method: "DELETE",
       headers: {
-        authorization: `Bearer ${localStorage.getItem("accessToken")}`
+        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
     })
       .then((res) => res.json())
@@ -49,15 +51,16 @@ const ReportedItems = () => {
 
   if (isLoading) return <Loading />;
 
-  if (products.length === 0) return <div className="mx-5 my-3 text-2xl">No reports were found.</div>;
+  if (products.length === 0)
+    return <div className="mx-5 my-3 text-2xl">No reports were found.</div>;
 
   return (
     <div className="m-4">
-      <h1 className="border-b-2 mb-4 border-gray-800 flex justify-between  font-medium">
+      <SectionHeader>
         <span className="px-4 py-1 bg-gray-800 text-2xl text-white">
           Reported Items
         </span>
-      </h1>
+      </SectionHeader>
       <div className="overflow-x-auto">
         <table className="table table-compact w-full">
           <thead>
@@ -118,11 +121,7 @@ const ReportedItems = () => {
                     <td>{pd.productData[0].contact}</td>
                     <td>{pd.productData[0].location}</td>
                     <td>
-                      {pd.productData[0].isAdvertised ? (
-                        "Running"
-                      ) : (
-                        "None"
-                      )}
+                      {pd.productData[0].isAdvertised ? "Running" : "None"}
                     </td>
                     <td>
                       <label

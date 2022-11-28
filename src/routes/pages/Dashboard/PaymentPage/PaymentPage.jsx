@@ -18,7 +18,7 @@ const PaymentPage = () => {
     queryKey: ["booking"],
     queryFn: async () => {
       const { data } = await axios.get(
-        `http://localhost:5000/payment-booking/${id}`, {
+        `https://secondhand-bazaar-server.vercel.app/payment-booking/${id}`, {
           headers: {
             authorization: `Bearer ${localStorage.getItem("accessToken")}`
           },

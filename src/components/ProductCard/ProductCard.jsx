@@ -22,7 +22,7 @@ const ProductCard = ({
   const [{ email, isVerified }] = sellerData;
 
   const reportProduct = () => {
-    fetch(`http://localhost:5000/reported-product/`, {
+    fetch(`https://secondhand-bazaar-server.vercel.app/reported-product/`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -54,13 +54,13 @@ const ProductCard = ({
         />
       </div>
       <div className="px-2 flex flex-col">
-        <h2 className="text-2xl font-bold mb-3">{productName}</h2>
+        <h2 className="text-2xl font-bold font-barlow-cond tracking-wide mb-3">{productName}</h2>
         <div className="flex items-center gap-2">
-          <p className="text-sm">
-            <span className="font-semibold">Seller: </span>
+          <p className="text-sm font-poppins">
+            <span className="font-semibold font-barlow-cond tracking-wide text-md">Seller: </span>
             {email}
           </p>
-          <span className="font-semibold"></span>
+          <span className="font-semibold font-barlow-cond tracking-wide text-md"></span>
           {isVerified ? (
             <span
               className="text-blue-500 tooltip tooltip-right"
@@ -72,43 +72,43 @@ const ProductCard = ({
         </div>
         <div className="grid grid-cols-2">
           <div>
-            <p className="text-sm">
-              <span className="font-semibold">Asking Price: </span>${askingPrice}
+            <p className="text-sm font-poppins">
+              <span className="font-semibold font-barlow-cond tracking-wide text-md">Asking Price: </span>${askingPrice}
             </p>
-            <p className="text-sm">
-              <span className="font-semibold">Retail Price: </span>${retailPrice}
+            <p className="text-sm font-poppins">
+              <span className="font-semibold font-barlow-cond tracking-wide text-md">Retail Price: </span>${retailPrice}
             </p>
-            <p className="text-sm">
-              <span className="font-semibold">Condition: </span>
+            <p className="text-sm font-poppins">
+              <span className="font-semibold font-barlow-cond tracking-wide text-md">Condition: </span>
               {productCondition}
             </p>
           </div>
           <div>
-            <p className="text-sm">
-              <span className="font-semibold">Purchase Year: </span>
+            <p className="text-sm font-poppins">
+              <span className="font-semibold font-barlow-cond tracking-wide text-md">Purchase Year: </span>
               {purchaseYear}
             </p>
-            <p className="text-sm">
-              <span className="font-semibold">Contact Number: </span>
+            <p className="text-sm font-poppins">
+              <span className="font-semibold font-barlow-cond tracking-wide text-md">Contact Number: </span>
               {contact}
             </p>
-            <p className="text-sm">
-              <span className="font-semibold">Location: </span>
+            <p className="text-sm font-poppins">
+              <span className="font-semibold font-barlow-cond tracking-wide text-md">Location: </span>
               {location}
             </p>
           </div>
         </div>
         <div className="flex-grow my-3">
-        <p><span className="font-semibold">Description: </span>{description}</p>
+        <p className="text-sm"><span className="font-semibold font-barlow-cond tracking-wide text-md">Description: </span>{description}</p>
         </div>
         <div className="flex justify-between py-2">
-          <button className="btn btn-warning btn-sm" onClick={reportProduct}>
+          <button className="btn btn-warning btn-sm font-poppins" onClick={reportProduct}>
             Report
           </button>
           <label
             onClick={() => openBookModal(productData)}
             htmlFor="confirmation-modal"
-            className="btn btn-sm btn-primary"
+            className="btn btn-sm font-poppins btn-primary"
           >
             Buy now
           </label>

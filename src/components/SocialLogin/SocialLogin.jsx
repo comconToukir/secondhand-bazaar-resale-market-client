@@ -20,7 +20,7 @@ const SocialLogin = ({ setLoginUserEmail, loading, setLoading }) => {
           role: "buyer",
         };
 
-        fetch("http://localhost:5000/user", {
+        fetch("https://secondhand-bazaar-server.vercel.app/user", {
           method: "PUT",
           headers: {
             "content-type": "application/json",

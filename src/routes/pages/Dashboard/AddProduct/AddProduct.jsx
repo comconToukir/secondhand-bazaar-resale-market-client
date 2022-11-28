@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import AuthButton from "../../../../components/AuthButton/AuthButton";
 import { UserContext } from "./../../../../contexts/UserContext/UserContext";
+import SectionHeader from "./../../../../components/SectionHeader/SectionHeader";
 
 const AddProduct = () => {
   const imgBBKey = process.env.REACT_APP_imgbb_key;
@@ -17,8 +18,8 @@ const AddProduct = () => {
   const { data: categories = [], isLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: () =>
-      fetch(`http://localhost:5000/get-categories`).then((res) =>
-        res.json()
+      fetch(`https://secondhand-bazaar-server.vercel.app/get-categories`).then(
+        (res) => res.json()
       ),
   });
 
@@ -32,7 +33,7 @@ const AddProduct = () => {
   const onSubmit = (data) => {
     setIsAdding(true);
 
-    console.log(data)
+    console.log(data);
 
     const image = data.image[0];
     const formData = new FormData();
@@ -53,11 +54,11 @@ const AddProduct = () => {
           data.isSold = false;
           data.sellerEmail = user?.email;
 
-          fetch("http://localhost:5000/add-product", {
+          fetch("https://secondhand-bazaar-server.vercel.app/add-product", {
             method: "POST",
             headers: {
               "content-type": "application/json",
-              authorization: `Bearer ${localStorage.getItem("accessToken")}`
+              authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
             body: JSON.stringify(data),
           })
@@ -68,11 +69,14 @@ const AddProduct = () => {
                 navigate("/dashboard/my-products");
                 setIsAdding(false);
               }
-            }).catch(error => {
-              setIsAdding(false);
-              toast.error('Sorry! Something unexpected happened. Please try again.')
-              console.log(error);
             })
+            .catch((error) => {
+              setIsAdding(false);
+              toast.error(
+                "Sorry! Something unexpected happened. Please try again."
+              );
+              console.log(error);
+            });
         }
       });
   };
@@ -80,11 +84,11 @@ const AddProduct = () => {
   return (
     <div>
       <div className=" m-4">
-      <h1 className="border-b-2 border-gray-800 flex justify-between  font-medium">
-        <span className="px-4 py-1 bg-gray-800 text-2xl text-white">
-          Add Your Product
-        </span>
-      </h1>
+        <SectionHeader>
+          <span className="px-4 py-1 bg-gray-800 text-2xl text-white">
+            Add Your Product
+          </span>
+        </SectionHeader>
         <form className="" onSubmit={handleSubmit(onSubmit)}>
           <div className="form-control max-w-lg mx-auto px-8">
             <label className="label">
@@ -187,9 +191,11 @@ const AddProduct = () => {
                 required: true,
               })}
             >
-              {
-                categories.map(ct => <option key={ct._id} value={ct._id}>{ct.categoryName}</option>)
-              }
+              {categories.map((ct) => (
+                <option key={ct._id} value={ct._id}>
+                  {ct.categoryName}
+                </option>
+              ))}
             </select>
             {errors?.categoryId?.type === "required" && (
               <p className="text-red-500 text-xs">

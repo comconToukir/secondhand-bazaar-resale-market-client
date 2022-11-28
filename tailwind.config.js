@@ -4,7 +4,12 @@ module.exports = {
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        'barlow-cond': 'Barlow Condensed',
+        'poppins': 'Poppins',
+      }
+    },
   },
   plugins: [require("daisyui")],
 }

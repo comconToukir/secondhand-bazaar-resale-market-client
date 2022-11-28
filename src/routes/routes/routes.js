@@ -38,17 +38,17 @@ const router = createBrowserRouter([
       },
       {
         path: 'category/:id',
-        loader: ({ params }) => fetch(`http://localhost:5000/v2/category/${params.id}`),
+        loader: ({ params }) => fetch(`https://secondhand-bazaar-server.vercel.app/v2/category/${params.id}`),
         element: <Category />
       },
       {
         path: 'advertisements',
-        loader: () => fetch('http://localhost:5000/v2/advertisements'),
+        loader: () => fetch('https://secondhand-bazaar-server.vercel.app/v2/advertisements'),
         element: <Advertisements />
       },
       {
         path: 'blog',
-        loader: () => fetch('http://localhost:5000/blogs'),
+        loader: () => fetch('https://secondhand-bazaar-server.vercel.app/blogs'),
         element: <Blog />
       },
       {

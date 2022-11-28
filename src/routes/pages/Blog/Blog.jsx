@@ -12,7 +12,7 @@ const Blog = () => {
       {blogData.map((blog) => {
         return (
           <div key={blog._id} className="p-10 bg-gray-100">
-            <h2 className="text-2xl font-bold">{blog.question}</h2>
+            <h2 className="text-3xl font-bold font-barlow-cond">{blog.question}</h2>
             <p className="p-3 whitespace-pre-wrap">{blog.answer}</p>
           </div>
         );

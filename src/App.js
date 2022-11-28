@@ -9,7 +9,7 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <div data-theme="corporate">
+      <div data-theme="corporate" className='font-poppins'>
         <RouterProvider router={router} />
         <Toaster />
       </div>

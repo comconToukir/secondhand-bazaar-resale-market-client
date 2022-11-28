@@ -1,11 +1,17 @@
 import { useContext, useState } from "react";
 import toast from "react-hot-toast";
-import { useLoaderData, useLocation, useNavigate, useNavigation } from "react-router-dom";
+import {
+  useLoaderData,
+  useLocation,
+  useNavigate,
+  useNavigation,
+} from "react-router-dom";
 import BookingModal from "../../../components/BookingModal/BookingModal";
 import Loading from "../../../components/Loading/Loading";
 import ProductCard from "../../../components/ProductCard/ProductCard";
 import useCheckRole from "../../../hooks/useCheckRole";
-import { UserContext } from './../../../contexts/UserContext/UserContext';
+import { UserContext } from "./../../../contexts/UserContext/UserContext";
+import SectionHeader from "./../../../components/SectionHeader/SectionHeader";
 
 const Category = () => {
   const [buyingProduct, setBuyingProduct] = useState(null);
@@ -13,15 +19,15 @@ const Category = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const navigation = useNavigation();
-  
+
   const { user } = useContext(UserContext);
 
   const closeModal = () => setBuyingProduct(null);
 
   const openBookModal = (product) => {
     if (!user) {
-      toast("Please Login first.")
-      navigate('/login', {state: {from: location}});
+      toast("Please Login first.");
+      navigate("/login", { state: { from: location } });
     } else {
       setBuyingProduct(product);
     }
@@ -31,9 +37,11 @@ const Category = () => {
 
   return (
     <div className="px-4 my-4 min-h-screen max-w-screen-xl mx-auto">
-      <h1 className="border-b-2 mb-4 border-gray-800 flex justify-between">
-        <span className="px-4 py-1 bg-gray-800 text-lg text-white">Products</span>
-      </h1>
+      <SectionHeader>
+        <span className="px-4 py-1 bg-gray-800 text-lg text-white">
+          Products
+        </span>
+      </SectionHeader>
       <div className="grid gap-5">
         {products.length ? (
           products.map((pd) => (
@@ -49,7 +57,9 @@ const Category = () => {
           </h1>
         )}
       </div>
-      {buyingProduct ? <BookingModal buyingProduct={buyingProduct} closeModal={closeModal} /> : null}
+      {buyingProduct ? (
+        <BookingModal buyingProduct={buyingProduct} closeModal={closeModal} />
+      ) : null}
     </div>
   );
 };

@@ -2,6 +2,7 @@ import banner from "../../../assets/images/Home/home-page-banner.webp";
 import offer from "../../../assets/images/Home/3.webp";
 import HomeAdvertisement from "./HomeAdvertisement/HomeAdvertisement";
 import ThreeCategories from "./ThreeCategories/ThreeCategories";
+import SiteFeatures from "./SiteFeatures/SiteFeatures";
 
 const Home = () => {
   return (
@@ -11,7 +12,8 @@ const Home = () => {
         <img src={offer} alt="" />
       </header>
 
-      <main className="mt-9">
+      <main className="">
+        <SiteFeatures />
         <ThreeCategories />
         <HomeAdvertisement />
       </main>

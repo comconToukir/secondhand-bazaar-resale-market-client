@@ -5,6 +5,7 @@ import toast from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import BookingModal from "../../../../components/BookingModal/BookingModal";
 import ProductCard from "../../../../components/ProductCard/ProductCard";
+import SectionHeader from "../../../../components/SectionHeader/SectionHeader";
 import { UserContext } from "../../../../contexts/UserContext/UserContext";
 
 const HomeAdvertisement = () => {
@@ -18,8 +19,8 @@ const HomeAdvertisement = () => {
 
   const openBookModal = (product) => {
     if (!user) {
-      toast("Please Login first.")
-      navigate('/login', {state: {from: location}});
+      toast("Please Login first.");
+      navigate("/login", { state: { from: location } });
     } else {
       setBuyingProduct(product);
     }
@@ -32,7 +33,9 @@ const HomeAdvertisement = () => {
   } = useQuery({
     queryKey: ["3-advertised-products"],
     queryFn: async () => {
-      const { data } = await axios.get(`http://localhost:5000/v2/home-advertisements`);
+      const { data } = await axios.get(
+        `https://secondhand-bazaar-server.vercel.app/v2/home-advertisements`
+      );
       return data;
     },
   });
@@ -41,16 +44,29 @@ const HomeAdvertisement = () => {
 
   return (
     <section className="my-64 px-3">
-      <h1 className="border-b-2 border-gray-800 flex justify-between">
-        <span className="px-4 py-1 bg-gray-800 text-lg text-white">Advertised Products</span>
-        <Link to="/advertisements" className="px-4 py-1 bg-gray-600 text-lg text-white">See All</Link>
-      </h1>
+      <SectionHeader>
+        <span className="px-4 py-1 bg-gray-800 text-lg text-white">
+          Advertised Products
+        </span>
+        <Link
+          to="/advertisements"
+          className="px-4 py-1 bg-gray-600 text-lg text-white"
+        >
+          See All
+        </Link>
+      </SectionHeader>
       <div className="grid gap-4 my-4">
         {products.map((pd) => (
-          <ProductCard key={pd._id} productData={pd} openBookModal={openBookModal} />
+          <ProductCard
+            key={pd._id}
+            productData={pd}
+            openBookModal={openBookModal}
+          />
         ))}
       </div>
-      {buyingProduct ? <BookingModal buyingProduct={buyingProduct} closeModal={closeModal} /> : null}
+      {buyingProduct ? (
+        <BookingModal buyingProduct={buyingProduct} closeModal={closeModal} />
+      ) : null}
     </section>
   );
 };

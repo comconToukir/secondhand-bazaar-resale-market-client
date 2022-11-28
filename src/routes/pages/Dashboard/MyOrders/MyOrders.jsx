@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import Loading from "../../../../components/Loading/Loading";
+import SectionHeader from "../../../../components/SectionHeader/SectionHeader";
 import { UserContext } from "../../../../contexts/UserContext/UserContext";
 import ConfirmationModal from "./../../../../components/ConfirmationModal/ConfirmationModal";
 
@@ -21,9 +22,10 @@ const MyOrders = () => {
     queryKey: ["my-orders"],
     queryFn: async () => {
       const { data } = await axios.get(
-        `http://localhost:5000/book-product?email=${user.email}`, {
+        `https://secondhand-bazaar-server.vercel.app/book-product?email=${user.email}`,
+        {
           headers: {
-            authorization: `Bearer ${localStorage.getItem("accessToken")}`
+            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
         }
       );
@@ -42,12 +44,15 @@ const MyOrders = () => {
   const closeModal = () => setDeletingProduct(null);
 
   const deleteProduct = (id) => {
-    fetch(`http://localhost:5000/book-product?email=${user.email}&id=${id}`, {
-      method: "DELETE",
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("accessToken")}`
-      },
-    })
+    fetch(
+      `https://secondhand-bazaar-server.vercel.app/book-product?email=${user.email}&id=${id}`,
+      {
+        method: "DELETE",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.modifiedCount) {
@@ -62,11 +67,11 @@ const MyOrders = () => {
 
   return (
     <div className="m-4">
-      <h1 className="border-b-2 mb-4 border-gray-800 flex justify-between  font-medium">
+      <SectionHeader>
         <span className="px-4 py-1 bg-gray-800 text-2xl text-white">
           My Orders
         </span>
-      </h1>
+      </SectionHeader>
       <div className="overflow-x-auto">
         <table className="table table-compact w-full">
           <thead>
@@ -109,7 +114,7 @@ const MyOrders = () => {
                     <td>
                       {od?.boughtBy === user.email ? (
                         <span className="text-green-600">Paid</span>
-                      ) : od.sellerRemoved || od.isPaid  ? (
+                      ) : od.sellerRemoved || od.isPaid ? (
                         <span className="text-gray-400">Unavailable</span>
                       ) : (
                         <Link

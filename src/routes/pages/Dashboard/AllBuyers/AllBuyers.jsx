@@ -4,6 +4,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import ConfirmationModal from "../../../../components/ConfirmationModal/ConfirmationModal";
 import Loading from "../../../../components/Loading/Loading";
+import SectionHeader from "../../../../components/SectionHeader/SectionHeader";
 
 const AllBuyers = () => {
   // const { user } = useContext(UserContext);
@@ -18,7 +19,7 @@ const AllBuyers = () => {
   } = useQuery({
     queryKey: ["all-buyers"],
     queryFn: async () => {
-      const { data } = await axios.get(`http://localhost:5000/all-buyers`, {
+      const { data } = await axios.get(`https://secondhand-bazaar-server.vercel.app/all-buyers`, {
         headers: {
           authorization: `Bearer ${localStorage.getItem("accessToken")}`
         },
@@ -29,7 +30,7 @@ const AllBuyers = () => {
   });
 
   const removeBuyer = (id) => {
-    fetch(`http://localhost:5000/remove-buyer?id=${id}`, {
+    fetch(`https://secondhand-bazaar-server.vercel.app/remove-buyer?id=${id}`, {
       method: "DELETE",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`
@@ -52,11 +53,11 @@ const AllBuyers = () => {
 
   return (
     <div className="m-4">
-      <h1 className="border-b-2 mb-4 border-gray-800 flex justify-between  font-medium">
-        <span className="px-4 py-1 bg-gray-800 text-2xl text-white">
+      <SectionHeader>
+      <span className="px-4 py-1 bg-gray-800 text-2xl text-white">
           All Buyers
         </span>
-      </h1>
+      </SectionHeader>
       <div className="overflow-x-auto">
         <table className="table table-compact w-full">
           <thead>

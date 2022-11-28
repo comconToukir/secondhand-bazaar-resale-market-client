@@ -44,7 +44,7 @@ const Register = () => {
     createUser(email, password)
       .then(() => updateUser({ displayName: name }))
       .then((result) => {
-        fetch("http://localhost:5000/user", {
+        fetch("https://secondhand-bazaar-server.vercel.app/user", {
           method: "PUT",
           headers: {
             "content-type": "application/json",

@@ -4,6 +4,7 @@ import { useContext, useState } from "react";
 import toast from "react-hot-toast";
 import ConfirmationModal from "../../../../components/ConfirmationModal/ConfirmationModal";
 import Loading from "../../../../components/Loading/Loading";
+import SectionHeader from "../../../../components/SectionHeader/SectionHeader";
 import { UserContext } from "../../../../contexts/UserContext/UserContext";
 
 const MyProducts = () => {
@@ -22,7 +23,7 @@ const MyProducts = () => {
     queryKey: ["my-products"],
     queryFn: async () => {
       const { data } = await axios.get(
-        `http://localhost:5000/all-products/${user.email}`,
+        `https://secondhand-bazaar-server.vercel.app/all-products/${user.email}`,
         {
           headers: {
             authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -34,7 +35,7 @@ const MyProducts = () => {
   });
 
   const addAdvertise = (id) => {
-    fetch(`http://localhost:5000/advertise/${id}`, {
+    fetch(`https://secondhand-bazaar-server.vercel.app/advertise/${id}`, {
       method: "PUT",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -51,7 +52,7 @@ const MyProducts = () => {
   };
 
   const deleteProduct = (id) => {
-    fetch(`http://localhost:5000/delete-product/${id}`, {
+    fetch(`https://secondhand-bazaar-server.vercel.app/delete-product/${id}`, {
       method: "DELETE",
       headers: {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
@@ -72,7 +73,8 @@ const MyProducts = () => {
   if (products.length === 0)
     return (
       <div className="mx-5 my-3 text-xl">
-        Your have not yet added any product or your products have been already bought. Please check My Buyers page.
+        Your have not yet added any product or your products have been already
+        bought. Please check My Buyers page.
       </div>
     );
 
@@ -80,11 +82,11 @@ const MyProducts = () => {
 
   return (
     <div className="m-4">
-      <h1 className="border-b-2 mb-4 border-gray-800 flex justify-between  font-medium">
+      <SectionHeader>
         <span className="px-4 py-1 bg-gray-800 text-2xl text-white">
           My Products
         </span>
-      </h1>
+      </SectionHeader>
       <div className="overflow-x-auto">
         <table className="table table-compact w-full">
           <thead>

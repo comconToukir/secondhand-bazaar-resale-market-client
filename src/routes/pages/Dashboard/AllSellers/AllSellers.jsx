@@ -3,6 +3,7 @@ import { useState } from "react";
 import toast from "react-hot-toast";
 import ConfirmationModal from "../../../../components/ConfirmationModal/ConfirmationModal";
 import Loading from "../../../../components/Loading/Loading";
+import SectionHeader from "../../../../components/SectionHeader/SectionHeader";
 
 const AllSellers = () => {
   const [deletingSeller, setDeletingSeller] = useState(null);
@@ -15,7 +16,7 @@ const AllSellers = () => {
   } = useQuery({
     queryKey: ["all-sellers"],
     queryFn: () =>
-      fetch(`http://localhost:5000/all-sellers`, {
+      fetch(`https://secondhand-bazaar-server.vercel.app/all-sellers`, {
         headers: {
           authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
@@ -26,7 +27,7 @@ const AllSellers = () => {
   const closeVrfModal = () => setVerifyingSeller(null);
 
   const verifySeller = (id) => {
-    fetch("http://localhost:5000/verify-seller", {
+    fetch("https://secondhand-bazaar-server.vercel.app/verify-seller", {
       method: "PUT",
       headers: {
         "content-type": "application/json",
@@ -48,12 +49,15 @@ const AllSellers = () => {
   };
 
   const removeSeller = (email) => {
-    fetch(`http://localhost:5000/remove-seller?email=${email}`, {
-      method: "DELETE",
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-      },
-    })
+    fetch(
+      `https://secondhand-bazaar-server.vercel.app/remove-seller?email=${email}`,
+      {
+        method: "DELETE",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -74,11 +78,11 @@ const AllSellers = () => {
 
   return (
     <div className="m-4">
-      <h1 className="border-b-2 mb-4 border-gray-800 flex justify-between  font-medium">
+      <SectionHeader>
         <span className="px-4 py-1 bg-gray-800 text-2xl text-white">
           All Sellers
         </span>
-      </h1>
+      </SectionHeader>
       <div className="overflow-x-auto">
         <table className="table table-compact w-full">
           <thead>

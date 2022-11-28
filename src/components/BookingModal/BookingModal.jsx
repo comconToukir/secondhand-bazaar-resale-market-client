@@ -44,7 +44,7 @@ const BookingModal = ({
     data.sellerContact = contact;
     data.sellerLocation = location;
     
-    fetch('http://localhost:5000/book-product', {
+    fetch('https://secondhand-bazaar-server.vercel.app/book-product', {
       method: 'PUT',
       headers: {
         'content-type': 'application/json',

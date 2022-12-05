@@ -59,9 +59,3 @@ This website is created to sell used (second-hand) Desktop computer parts. This 
 * react-icons
 * stripe/stripe-js
 * stripe/react-stripe-js
-
-
-##### Admin access
-adminEmail: admin@gmail.com
-
-adminPassword: 111111

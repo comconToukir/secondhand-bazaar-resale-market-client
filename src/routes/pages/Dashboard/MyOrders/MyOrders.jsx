@@ -30,7 +30,7 @@ const MyOrders = () => {
         }
       );
 
-      // console.log(data);
+      console.log(data);
       // const filteredByBoughtBy = data.filter(
       //   (dt) => dt.boughtBy === user.email || !dt.boughtBy
       // );

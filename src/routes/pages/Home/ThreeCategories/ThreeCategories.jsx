@@ -26,7 +26,7 @@ const ThreeCategories = () => {
           Categories
         </span>
       </SectionHeader>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {categories.map((ct) => (
           <Link
             key={ct._id}

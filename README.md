@@ -1,7 +1,5 @@
 # Secondhand Bazaar - Resale Market | [Live Site](https://secondhand-bazaar.web.app/)
 
-This website is created to sell used (second-hand) Desktop computer parts. This project was created as a part of assignment of **Complete Web Development Bootcamp** by **Programming Hero** with **Jhankar Mahbub**. 
-
 ## Project Features
 
 ### Categories
